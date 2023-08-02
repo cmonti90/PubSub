@@ -10,6 +10,10 @@ set(SOURCES pubsub.cpp)
 
 set(HEADERS 
             pubsub.h
+            QueueMngr.h
+            Endpoint.h
+            Component.h
+            "Message.h"
 )
 
 add_library(${target} SHARED ${SOURCES})
