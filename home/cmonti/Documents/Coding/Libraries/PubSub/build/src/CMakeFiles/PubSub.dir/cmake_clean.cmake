@@ -1,4 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/PubSub.dir/Module.cpp.o"
+  "CMakeFiles/PubSub.dir/Module.cpp.o.d"
+  "CMakeFiles/PubSub.dir/Thread.cpp.o"
+  "CMakeFiles/PubSub.dir/Thread.cpp.o.d"
+  "CMakeFiles/PubSub.dir/Time.cpp.o"
+  "CMakeFiles/PubSub.dir/Time.cpp.o.d"
   "CMakeFiles/PubSub.dir/pubsub.cpp.o"
   "CMakeFiles/PubSub.dir/pubsub.cpp.o.d"
   "libPubSub.pdb"

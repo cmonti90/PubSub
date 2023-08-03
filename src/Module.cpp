@@ -4,9 +4,13 @@
 namespace PubSub
 {
 
+    Module::Module() : m_threadCount{0u}, maxProcCount{0u}
+    {
+    }
+
     void Module::addThread(Thread &thread)
     {
-        m_threads.push_back(thread);
+        m_threads.emplace_back(std::move(thread));
         m_threadCount++;
     }
 
@@ -25,35 +29,40 @@ namespace PubSub
         }
     }
 
+    void Module::initialize()
+    {
+        run(Thread::ThreadState::INITIALIZE);
+    }
+
     void Module::start()
+    {
+        run(Thread::ThreadState::UPDATE);
+    }
+
+    void Module::finalize()
+    {
+        run(Thread::ThreadState::FINALIZE);
+    }
+
+    void Module::run(const Thread::ThreadState &threadState)
     {
         for (unsigned int procIdx{0u}; procIdx < maxProcCount; procIdx++)
         {
-            for (auto &thread : m_threads)
+            for (unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++)
             {
-                if (procIdx < thread.getProcessCount())
-                {
-                    thread.start();
-                }
+                m_threads[threadIdx].run(threadState);
             }
 
-            for (auto &thread : m_threads)
+            for (unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++)
             {
-                thread.join();
+                m_threads[threadIdx].join();
             }
         }
 
-        for (auto &thread : m_threads)
+        for (unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++)
         {
-            thread.resetProcessCount();
+            m_threads[threadIdx].resetProcessCount();
         }
     }
 
-    void Module::stop()
-    {
-        for (auto &thread : m_threads)
-        {
-            thread.stop();
-        }
-    }
 } // namespace PubSub

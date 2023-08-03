@@ -6,7 +6,10 @@ set(version 1.0.0)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(SOURCES pubsub.cpp)
+set(SOURCES pubsub.cpp
+            Module.cpp
+            Thread.cpp
+            Time.cpp)
 
 set(HEADERS 
             pubsub.h
@@ -14,6 +17,9 @@ set(HEADERS
             Endpoint.h
             Component.h
             "Message.h"
+            Time.h
+            Thread.h
+            Module.h
 )
 
 add_library(${target} SHARED ${SOURCES})

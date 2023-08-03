@@ -8,23 +8,29 @@
 
 namespace PubSub
 {
+    typedef std::vector<Thread> ThreadList;
     class Module
     {
     public:
-        Module() = default;
+        Module();
         ~Module() = default;
 
         void addThread(Thread &thread);
         void addCompToThread(Thread &thread, Component *comp);
 
+        void initialize();
         void start();
-        void stop();
+        void finalize();
+
+        void run(const Thread::ThreadState &threadState);
 
     private:
         unsigned int m_threadCount{0u};
         unsigned int maxProcCount{0u};
 
-        std::vector<Thread> m_threads;
+        ThreadList m_threads;
+
+        void run(void *ptrClassFcn);
     };
 } // namespace PubSub
 

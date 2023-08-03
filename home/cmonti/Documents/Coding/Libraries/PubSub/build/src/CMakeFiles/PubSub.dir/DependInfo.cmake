@@ -8,6 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Module.cpp" "src/CMakeFiles/PubSub.dir/Module.cpp.o" "gcc" "src/CMakeFiles/PubSub.dir/Module.cpp.o.d"
+  "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Thread.cpp" "src/CMakeFiles/PubSub.dir/Thread.cpp.o" "gcc" "src/CMakeFiles/PubSub.dir/Thread.cpp.o.d"
+  "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Time.cpp" "src/CMakeFiles/PubSub.dir/Time.cpp.o" "gcc" "src/CMakeFiles/PubSub.dir/Time.cpp.o.d"
   "/home/cmonti/Documents/Coding/Libraries/PubSub/src/pubsub.cpp" "src/CMakeFiles/PubSub.dir/pubsub.cpp.o" "gcc" "src/CMakeFiles/PubSub.dir/pubsub.cpp.o.d"
   )
 

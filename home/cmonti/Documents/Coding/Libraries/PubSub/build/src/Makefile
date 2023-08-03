@@ -175,6 +175,78 @@ PubSub/fast:
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/build
 .PHONY : PubSub/fast
 
+Module.o: Module.cpp.o
+.PHONY : Module.o
+
+# target to build an object file
+Module.cpp.o:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Module.cpp.o
+.PHONY : Module.cpp.o
+
+Module.i: Module.cpp.i
+.PHONY : Module.i
+
+# target to preprocess a source file
+Module.cpp.i:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Module.cpp.i
+.PHONY : Module.cpp.i
+
+Module.s: Module.cpp.s
+.PHONY : Module.s
+
+# target to generate assembly for a file
+Module.cpp.s:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Module.cpp.s
+.PHONY : Module.cpp.s
+
+Thread.o: Thread.cpp.o
+.PHONY : Thread.o
+
+# target to build an object file
+Thread.cpp.o:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Thread.cpp.o
+.PHONY : Thread.cpp.o
+
+Thread.i: Thread.cpp.i
+.PHONY : Thread.i
+
+# target to preprocess a source file
+Thread.cpp.i:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Thread.cpp.i
+.PHONY : Thread.cpp.i
+
+Thread.s: Thread.cpp.s
+.PHONY : Thread.s
+
+# target to generate assembly for a file
+Thread.cpp.s:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Thread.cpp.s
+.PHONY : Thread.cpp.s
+
+Time.o: Time.cpp.o
+.PHONY : Time.o
+
+# target to build an object file
+Time.cpp.o:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Time.cpp.o
+.PHONY : Time.cpp.o
+
+Time.i: Time.cpp.i
+.PHONY : Time.i
+
+# target to preprocess a source file
+Time.cpp.i:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Time.cpp.i
+.PHONY : Time.cpp.i
+
+Time.s: Time.cpp.s
+.PHONY : Time.s
+
+# target to generate assembly for a file
+Time.cpp.s:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Time.cpp.s
+.PHONY : Time.cpp.s
+
 pubsub.o: pubsub.cpp.o
 .PHONY : pubsub.o
 
@@ -212,6 +284,15 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... PubSub"
+	@echo "... Module.o"
+	@echo "... Module.i"
+	@echo "... Module.s"
+	@echo "... Thread.o"
+	@echo "... Thread.i"
+	@echo "... Thread.s"
+	@echo "... Time.o"
+	@echo "... Time.i"
+	@echo "... Time.s"
 	@echo "... pubsub.o"
 	@echo "... pubsub.i"
 	@echo "... pubsub.s"
