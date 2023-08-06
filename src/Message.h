@@ -11,6 +11,8 @@ namespace PubSub
     {
     public:
         static const Message_Label MESSAGE_LABEL;
+
+        virtual void copyData(Message *msg) = 0;
     };
 
 } // namespace PubSub

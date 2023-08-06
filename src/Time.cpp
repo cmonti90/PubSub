@@ -6,7 +6,7 @@ namespace PubSub
 
     void Time::incrementTime()
     {
-        timeNow += 0.1;
+        timeNow += 1.0 / static_cast<double>(SimulationRunRate);
 
         counter++;
     }

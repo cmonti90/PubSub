@@ -29,9 +29,16 @@ namespace PubSub
         }
     }
 
+    void Module::addSimComp(SimComponent *comp)
+    {
+        m_simThread.push_back(comp);
+    }
+
     void Module::initialize()
     {
         run(Thread::ThreadState::INITIALIZE);
+
+        passSubscriptionLists();
     }
 
     void Module::start()
@@ -44,7 +51,29 @@ namespace PubSub
         run(Thread::ThreadState::FINALIZE);
     }
 
+    void Module::passSubscriptionLists()
+    {
+        for (unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++)
+        {
+            m_threads[threadIdx].passSubscriptionLists();
+        }
+
+        for (unsigned int threadIdx{0u}; threadIdx < m_simThread.size(); threadIdx++)
+        {
+            m_simThread[threadIdx].passSubscriptionLists();
+        }
+    }
+
     void Module::run(const Thread::ThreadState &threadState)
+    {
+        runSW(threadState);
+
+        m_time.incrementTime();
+
+        runSim(threadState);
+    }
+
+    void Module::runSW(const Thread::ThreadState &threadState)
     {
         for (unsigned int procIdx{0u}; procIdx < maxProcCount; procIdx++)
         {
@@ -57,12 +86,25 @@ namespace PubSub
             {
                 m_threads[threadIdx].join();
             }
+
+            m_queueMngr.dispatch();
         }
 
         for (unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++)
         {
             m_threads[threadIdx].resetProcessCount();
         }
+    }
+
+    void Module::runSim(const Thread::ThreadState &threadState)
+    {
+        for (unsigned int procIdx{0u}; procIdx < m_simThread.getProcessCount(); procIdx++)
+        {
+            m_simThread.runSingular(threadState, m_time.getCounter());
+            m_queueMngr.dispatch();
+        }
+
+        m_simThread.resetProcessCount();
     }
 
 } // namespace PubSub

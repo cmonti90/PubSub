@@ -24,6 +24,8 @@ namespace PubSub
         Message *popFront();
         void dispatch();
 
+        void getSubscriptionList(Component* comp, MessageSubscription &list);
+
     private:
         std::queue<Message *> m_queue;
         std::mutex m_mutex;

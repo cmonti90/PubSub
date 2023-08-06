@@ -16,8 +16,8 @@ set(SOURCES pubsub.cpp
 set(HEADERS 
             pubsub.h
             QueueMngr.h
-            Endpoint.h
             Component.h
+            SimComponent.h
             "Message.h"
             Time.h
             Thread.h

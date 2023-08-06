@@ -1,4 +1,5 @@
 #include "Thread.h"
+#include "Time.h"
 
 namespace PubSub
 {
@@ -39,7 +40,10 @@ namespace PubSub
             }
             else if (threadState == ThreadState::UPDATE)
             {
-                thread = std::thread(&Component::update, m_procs[procIdx]);
+                if (m_procs[procIdx]->hasActiveMessage())
+                {
+                    thread = std::thread(&Component::update, m_procs[procIdx]);
+                }
             }
             else if (threadState == ThreadState::FINALIZE)
             {
@@ -50,6 +54,29 @@ namespace PubSub
         }
     }
 
+    void Thread::runSingular(const ThreadState &threadState, bool shouldRun)
+    {
+        if (threadState == ThreadState::INITIALIZE)
+        {
+            thread = std::thread(&Component::initialize, m_procs[procIdx]);
+        }
+        else if (threadState == ThreadState::UPDATE)
+        {
+            if (shouldRun)
+            {
+                thread = std::thread(&Component::update, m_procs[procIdx]);
+            }
+        }
+        else if (threadState == ThreadState::FINALIZE)
+        {
+            thread = std::thread(&Component::finalize, m_procs[procIdx]);
+        }
+
+        join();
+
+        procIdx++;
+    }
+
     void Thread::join()
     {
         thread.join();
@@ -58,6 +85,16 @@ namespace PubSub
     void Thread::addComp(Component *comp)
     {
         m_procs.push_back(comp);
+    }
+
+    void Thread::passSubscriptionLists()
+    {
+        for (unsigned int i{0u}; i < m_procs.size(); i++)
+        {
+            thread = std::thread(&Component::giveSubscriptionListToQueueMngr, m_procs[i]);
+
+            join();
+        }
     }
 
 } // namespace PubSub

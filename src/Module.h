@@ -2,8 +2,10 @@
 #define DC26027A_04B1_4A1D_B196_A076A42F9DFD
 
 #include "Component.h"
+#include "SimComponent.h"
 #include "Thread.h"
 #include "QueueMngr.h"
+#include "Time.h"
 #include <thread>
 #include <vector>
 
@@ -19,6 +21,8 @@ namespace PubSub
         void addThread(Thread &thread);
         void addCompToThread(Thread &thread, Component *comp);
 
+        void addSimComp(SimComponent *comp);
+
         void initialize();
         void start();
         void finalize();
@@ -31,7 +35,15 @@ namespace PubSub
 
         ThreadList m_threads;
 
+        std::vector<Thread> m_simThread;
+
         QueueMngr m_queueMngr;
+
+        Time m_time;
+
+        void runSW(const Thread::ThreadState &threadState);
+        void runSim(const Thread::ThreadState &threadState);
+        void passSubscriptionLists();
 
         Module(const Module &) = delete;
         Module &operator=(const Module &) = delete;

@@ -1,10 +1,12 @@
 
 #include "Component.h"
+#include "QueueMngr.h"
 
 namespace PubSub
 {
-    Component::Component(const COMPONENT_LABEL str)
-        : Component_Label(str)
+    Component::Component(const COMPONENT_LABEL str, QueueMngr *queue_mngr)
+        : Component_Label(str),
+          m_queue_mngr(queue_mngr)
     {
     }
 
@@ -18,12 +20,44 @@ namespace PubSub
         m_subscribed_msg.insert(std::make_pair(msg->MESSAGE_LABEL, msg_type));
     }
 
+    MessageStatus Component::peek(Message_Label &msg_label)
+    {
+        std::unique_lock<std::mutex> lock(m_mutex);
+        MessageStatus status{FAIL};
+
+        if (m_passive_msg_buffer.empty())
+        {
+            if (m_active_msg_buffer.empty())
+            {
+                status = FAIL;
+            }
+            else
+            {
+                msg_label = m_active_msg_buffer.begin()->first;
+                status = SUCCESS;
+            }
+        }
+        else
+        {
+            msg_label = m_passive_msg_buffer.begin()->first;
+            status = SUCCESS;
+        }
+
+        lock.unlock();
+        m_condition.notify_one();
+
+        return status;
+    }
+
     void Component::send(Message *msg)
     {
+        m_queue_mngr->push(msg);
     }
 
     void Component::receive(Message *msg)
     {
+        std::unique_lock<std::mutex> lock(m_mutex);
+
         switch (m_subscribed_msg.find(msg->MESSAGE_LABEL)->second)
         {
         case ACTIVE:
@@ -40,6 +74,9 @@ namespace PubSub
         }
         break;
         }
+
+        lock.unlock();
+        m_condition.notify_one();
     }
 
     void Component::writeToBuffer(Message *msg)
@@ -68,6 +105,8 @@ namespace PubSub
 
     void Component::writeToBuffer(Message *msg, MessageBuffer &buffer)
     {
+        std::unique_lock<std::mutex> lock(m_mutex);
+
         if (buffer.count(msg->MESSAGE_LABEL))
         {
             *(buffer[msg->MESSAGE_LABEL]) = *msg;
@@ -76,5 +115,19 @@ namespace PubSub
         {
             buffer.insert(std::make_pair(msg->MESSAGE_LABEL, msg));
         }
+
+        lock.unlock();
+        m_condition.notify_one();
     }
+
+    void Component::giveSubscriptionListToQueueMngr()
+    {
+        m_queue_mngr->getSubscriptionList(this, m_subscribed_msg);
+    }
+
+    bool Component::hasActiveMessage() const
+    {
+        return !m_active_msg_buffer.empty();
+    }
+
 } // namespace PubSub

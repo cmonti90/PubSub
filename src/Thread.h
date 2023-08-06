@@ -25,14 +25,16 @@ namespace PubSub
 
         Thread &operator=(Thread &&obj);
 
-        
         void run(const ThreadState &state);
+        void runSingular(const ThreadState &state, bool shouldRun = true);
 
         void addComp(Component *comp);
         void join();
 
         unsigned int getProcessCount() const { return m_procs.size(); }
         void resetProcessCount() { procIdx = 0u; }
+
+        void passSubscriptionLists();
 
     private:
         unsigned int procIdx{0u};
@@ -42,5 +44,7 @@ namespace PubSub
         Thread(const Thread &) = delete;
         Thread &operator=(const Thread &) = delete;
     };
+
 } // namespace PubSub
+
 #endif /* A9994F3D_1E13_4D24_9ADD_1CA6D4A84F80 */

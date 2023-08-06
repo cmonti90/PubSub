@@ -98,7 +98,6 @@ src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o: \
  /usr/include/c++/8/bits/functional_hash.h \
  /usr/include/c++/8/bits/basic_string.tcc \
  /home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/Endpoint.h \
  /usr/include/c++/8/vector /usr/include/c++/8/bits/stl_construct.h \
  /usr/include/c++/8/bits/stl_uninitialized.h \
  /usr/include/c++/8/bits/stl_vector.h \
@@ -110,9 +109,6 @@ src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o: \
  /usr/include/c++/8/array /usr/include/c++/8/stdexcept \
  /usr/include/c++/8/bits/uses_allocator.h \
  /usr/include/c++/8/bits/invoke.h /usr/include/c++/8/bits/unordered_map.h \
- /usr/include/c++/8/queue /usr/include/c++/8/deque \
- /usr/include/c++/8/bits/stl_deque.h /usr/include/c++/8/bits/deque.tcc \
- /usr/include/c++/8/bits/stl_heap.h /usr/include/c++/8/bits/stl_queue.h \
  /usr/include/c++/8/mutex /usr/include/c++/8/chrono \
  /usr/include/c++/8/ratio /usr/include/c++/8/limits \
  /usr/include/c++/8/ctime /usr/include/c++/8/bits/parse_numbers.h \
@@ -125,4 +121,7 @@ src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o: \
  /usr/include/c++/8/bits/shared_ptr.h \
  /usr/include/c++/8/bits/shared_ptr_base.h \
  /usr/include/c++/8/bits/allocated_ptr.h \
- /usr/include/c++/8/bits/refwrap.h
+ /usr/include/c++/8/bits/refwrap.h /usr/include/c++/8/queue \
+ /usr/include/c++/8/deque /usr/include/c++/8/bits/stl_deque.h \
+ /usr/include/c++/8/bits/deque.tcc /usr/include/c++/8/bits/stl_heap.h \
+ /usr/include/c++/8/bits/stl_queue.h

@@ -4,37 +4,62 @@
 namespace PubSub
 {
 
-    void QueueMngr::push(Message* value)
+    void QueueMngr::push(Message *value)
     {
         std::unique_lock<std::mutex> lock(m_mutex);
+
         m_queue.push(value);
+
         lock.unlock();
         m_condition.notify_one();
     }
 
-    Message* QueueMngr::popFront()
+    Message *QueueMngr::popFront()
     {
         std::unique_lock<std::mutex> lock(m_mutex);
 
-        while (m_queue.empty())
-        {
-            m_condition.wait(lock);
-        }
-
-        Message* value = m_queue.front();
+        Message *value = m_queue.front();
         m_queue.pop();
+
+        lock.unlock();
+        m_condition.notify_one();
+
         return value;
     }
 
     void QueueMngr::dispatch()
     {
-        Message* msg = popFront();
-
-        for (unsigned int i{0u}; i < m_subscriberList[msg->MESSAGE_LABEL].size(); ++i)
+        while (!m_queue.empty())
         {
-             m_subscriberList[msg->MESSAGE_LABEL][i]->writeToBuffer(msg);
+            Message *msg = popFront();
+
+            for (unsigned int i{0u}; i < m_subscriberList[msg->MESSAGE_LABEL].size(); ++i)
+            {
+                m_subscriberList[msg->MESSAGE_LABEL][i]->writeToBuffer(msg);
+            }
+
+            delete msg;
         }
     }
 
+    void QueueMngr::getSubscriptionList(Component *comp, MessageSubscription &list)
+    {
+        std::unique_lock<std::mutex> lock(m_mutex);
+
+        for (auto it = list.begin(); it != list.end(); ++it)
+        {
+            if (m_subscriberList.count(it->first))
+            {
+                m_subscriberList.find(it->first)->second.push_back(comp);
+            }
+            else
+            {
+                m_subscriberList.insert(std::make_pair(it->first, std::vector<Component *>{comp}));
+            }
+        }
+
+        lock.unlock();
+        m_condition.notify_one();
+    }
 
 } // namespace PubSub

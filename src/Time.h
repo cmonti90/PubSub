@@ -9,6 +9,8 @@ namespace PubSub
         Time() = default;
         ~Time() = default;
 
+        static constexpr unsigned int SimulationRunRate = 1000u;
+
         void incrementTime();
         void finalize();
         void reset();
@@ -18,7 +20,7 @@ namespace PubSub
 
     private:
         double timeNow{0.0};
-        unsigned int counter;
+        unsigned int counter = 0u;
     };
 } // namespace PubSub
 
