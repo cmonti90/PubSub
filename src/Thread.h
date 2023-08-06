@@ -23,19 +23,7 @@ namespace PubSub
         ~Thread();
         Thread(Thread &&obj);
 
-        Thread &operator=(Thread &&obj)
-        {
-            if (thread.joinable())
-            {
-                thread.join();
-            }
-
-            procIdx = obj.procIdx;
-            m_procs = std::move(obj.m_procs);
-            thread = std::move(obj.thread);
-
-            return *this;
-        }
+        Thread &operator=(Thread &&obj);
 
         
         void run(const ThreadState &state);

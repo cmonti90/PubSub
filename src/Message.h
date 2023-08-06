@@ -5,13 +5,11 @@
 
 namespace PubSub
 {
+
+    typedef std::string Message_Label;
     class Message
     {
-        virtual void write(void *input) = 0;
-        virtual void copy(void *output) = 0;
-
-        typedef std::string Message_Label;
-
+    public:
         static const Message_Label MESSAGE_LABEL;
     };
 

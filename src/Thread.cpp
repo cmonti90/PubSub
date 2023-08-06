@@ -15,6 +15,20 @@ namespace PubSub
     {
     }
 
+    Thread &Thread::operator=(Thread &&obj)
+    {
+        if (thread.joinable())
+        {
+            thread.join();
+        }
+
+        procIdx = obj.procIdx;
+        m_procs = std::move(obj.m_procs);
+        thread = std::move(obj.thread);
+
+        return *this;
+    }
+
     void Thread::run(const ThreadState &threadState)
     {
         if (procIdx < m_procs.size())

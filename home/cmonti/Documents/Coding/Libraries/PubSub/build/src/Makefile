@@ -175,6 +175,30 @@ PubSub/fast:
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/build
 .PHONY : PubSub/fast
 
+Component.o: Component.cpp.o
+.PHONY : Component.o
+
+# target to build an object file
+Component.cpp.o:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Component.cpp.o
+.PHONY : Component.cpp.o
+
+Component.i: Component.cpp.i
+.PHONY : Component.i
+
+# target to preprocess a source file
+Component.cpp.i:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Component.cpp.i
+.PHONY : Component.cpp.i
+
+Component.s: Component.cpp.s
+.PHONY : Component.s
+
+# target to generate assembly for a file
+Component.cpp.s:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Component.cpp.s
+.PHONY : Component.cpp.s
+
 Module.o: Module.cpp.o
 .PHONY : Module.o
 
@@ -198,6 +222,30 @@ Module.s: Module.cpp.s
 Module.cpp.s:
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Module.cpp.s
 .PHONY : Module.cpp.s
+
+QueueMngr.o: QueueMngr.cpp.o
+.PHONY : QueueMngr.o
+
+# target to build an object file
+QueueMngr.cpp.o:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o
+.PHONY : QueueMngr.cpp.o
+
+QueueMngr.i: QueueMngr.cpp.i
+.PHONY : QueueMngr.i
+
+# target to preprocess a source file
+QueueMngr.cpp.i:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/QueueMngr.cpp.i
+.PHONY : QueueMngr.cpp.i
+
+QueueMngr.s: QueueMngr.cpp.s
+.PHONY : QueueMngr.s
+
+# target to generate assembly for a file
+QueueMngr.cpp.s:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/QueueMngr.cpp.s
+.PHONY : QueueMngr.cpp.s
 
 Thread.o: Thread.cpp.o
 .PHONY : Thread.o
@@ -284,9 +332,15 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... PubSub"
+	@echo "... Component.o"
+	@echo "... Component.i"
+	@echo "... Component.s"
 	@echo "... Module.o"
 	@echo "... Module.i"
 	@echo "... Module.s"
+	@echo "... QueueMngr.o"
+	@echo "... QueueMngr.i"
+	@echo "... QueueMngr.s"
 	@echo "... Thread.o"
 	@echo "... Thread.i"
 	@echo "... Thread.s"

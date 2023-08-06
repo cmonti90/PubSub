@@ -83,10 +83,24 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PubSub.dir/pubsub.cpp.s"
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cmonti/Documents/Coding/Libraries/PubSub/src/pubsub.cpp -o CMakeFiles/PubSub.dir/pubsub.cpp.s
 
+src/CMakeFiles/PubSub.dir/Component.cpp.o: src/CMakeFiles/PubSub.dir/flags.make
+src/CMakeFiles/PubSub.dir/Component.cpp.o: ../../../../../../../src/Component.cpp
+src/CMakeFiles/PubSub.dir/Component.cpp.o: src/CMakeFiles/PubSub.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/PubSub.dir/Component.cpp.o"
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/PubSub.dir/Component.cpp.o -MF CMakeFiles/PubSub.dir/Component.cpp.o.d -o CMakeFiles/PubSub.dir/Component.cpp.o -c /home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.cpp
+
+src/CMakeFiles/PubSub.dir/Component.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PubSub.dir/Component.cpp.i"
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.cpp > CMakeFiles/PubSub.dir/Component.cpp.i
+
+src/CMakeFiles/PubSub.dir/Component.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PubSub.dir/Component.cpp.s"
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.cpp -o CMakeFiles/PubSub.dir/Component.cpp.s
+
 src/CMakeFiles/PubSub.dir/Module.cpp.o: src/CMakeFiles/PubSub.dir/flags.make
 src/CMakeFiles/PubSub.dir/Module.cpp.o: ../../../../../../../src/Module.cpp
 src/CMakeFiles/PubSub.dir/Module.cpp.o: src/CMakeFiles/PubSub.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/PubSub.dir/Module.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/PubSub.dir/Module.cpp.o"
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/PubSub.dir/Module.cpp.o -MF CMakeFiles/PubSub.dir/Module.cpp.o.d -o CMakeFiles/PubSub.dir/Module.cpp.o -c /home/cmonti/Documents/Coding/Libraries/PubSub/src/Module.cpp
 
 src/CMakeFiles/PubSub.dir/Module.cpp.i: cmake_force
@@ -97,10 +111,24 @@ src/CMakeFiles/PubSub.dir/Module.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PubSub.dir/Module.cpp.s"
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cmonti/Documents/Coding/Libraries/PubSub/src/Module.cpp -o CMakeFiles/PubSub.dir/Module.cpp.s
 
+src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o: src/CMakeFiles/PubSub.dir/flags.make
+src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o: ../../../../../../../src/QueueMngr.cpp
+src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o: src/CMakeFiles/PubSub.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o"
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o -MF CMakeFiles/PubSub.dir/QueueMngr.cpp.o.d -o CMakeFiles/PubSub.dir/QueueMngr.cpp.o -c /home/cmonti/Documents/Coding/Libraries/PubSub/src/QueueMngr.cpp
+
+src/CMakeFiles/PubSub.dir/QueueMngr.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PubSub.dir/QueueMngr.cpp.i"
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/cmonti/Documents/Coding/Libraries/PubSub/src/QueueMngr.cpp > CMakeFiles/PubSub.dir/QueueMngr.cpp.i
+
+src/CMakeFiles/PubSub.dir/QueueMngr.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PubSub.dir/QueueMngr.cpp.s"
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/cmonti/Documents/Coding/Libraries/PubSub/src/QueueMngr.cpp -o CMakeFiles/PubSub.dir/QueueMngr.cpp.s
+
 src/CMakeFiles/PubSub.dir/Thread.cpp.o: src/CMakeFiles/PubSub.dir/flags.make
 src/CMakeFiles/PubSub.dir/Thread.cpp.o: ../../../../../../../src/Thread.cpp
 src/CMakeFiles/PubSub.dir/Thread.cpp.o: src/CMakeFiles/PubSub.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/PubSub.dir/Thread.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/PubSub.dir/Thread.cpp.o"
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/PubSub.dir/Thread.cpp.o -MF CMakeFiles/PubSub.dir/Thread.cpp.o.d -o CMakeFiles/PubSub.dir/Thread.cpp.o -c /home/cmonti/Documents/Coding/Libraries/PubSub/src/Thread.cpp
 
 src/CMakeFiles/PubSub.dir/Thread.cpp.i: cmake_force
@@ -114,7 +142,7 @@ src/CMakeFiles/PubSub.dir/Thread.cpp.s: cmake_force
 src/CMakeFiles/PubSub.dir/Time.cpp.o: src/CMakeFiles/PubSub.dir/flags.make
 src/CMakeFiles/PubSub.dir/Time.cpp.o: ../../../../../../../src/Time.cpp
 src/CMakeFiles/PubSub.dir/Time.cpp.o: src/CMakeFiles/PubSub.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/CMakeFiles/PubSub.dir/Time.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object src/CMakeFiles/PubSub.dir/Time.cpp.o"
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/PubSub.dir/Time.cpp.o -MF CMakeFiles/PubSub.dir/Time.cpp.o.d -o CMakeFiles/PubSub.dir/Time.cpp.o -c /home/cmonti/Documents/Coding/Libraries/PubSub/src/Time.cpp
 
 src/CMakeFiles/PubSub.dir/Time.cpp.i: cmake_force
@@ -128,7 +156,9 @@ src/CMakeFiles/PubSub.dir/Time.cpp.s: cmake_force
 # Object files for target PubSub
 PubSub_OBJECTS = \
 "CMakeFiles/PubSub.dir/pubsub.cpp.o" \
+"CMakeFiles/PubSub.dir/Component.cpp.o" \
 "CMakeFiles/PubSub.dir/Module.cpp.o" \
+"CMakeFiles/PubSub.dir/QueueMngr.cpp.o" \
 "CMakeFiles/PubSub.dir/Thread.cpp.o" \
 "CMakeFiles/PubSub.dir/Time.cpp.o"
 
@@ -136,12 +166,14 @@ PubSub_OBJECTS = \
 PubSub_EXTERNAL_OBJECTS =
 
 src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/pubsub.cpp.o
+src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/Component.cpp.o
 src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/Module.cpp.o
+src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/QueueMngr.cpp.o
 src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/Thread.cpp.o
 src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/Time.cpp.o
 src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/build.make
 src/libPubSub.so.1.0.0: src/CMakeFiles/PubSub.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX shared library libPubSub.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX shared library libPubSub.so"
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PubSub.dir/link.txt --verbose=$(VERBOSE)
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/src && $(CMAKE_COMMAND) -E cmake_symlink_library libPubSub.so.1.0.0 libPubSub.so.1 libPubSub.so
 

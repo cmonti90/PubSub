@@ -4,7 +4,7 @@
 namespace PubSub
 {
 
-    Module::Module() : m_threadCount{0u}, maxProcCount{0u}
+    Module::Module() : m_threadCount(0u), maxProcCount(0u), m_queueMngr()
     {
     }
 

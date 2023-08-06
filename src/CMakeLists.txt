@@ -7,7 +7,9 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 set(SOURCES pubsub.cpp
+            Component.cpp
             Module.cpp
+            QueueMngr.cpp
             Thread.cpp
             Time.cpp)
 

@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "Thread.h"
+#include "QueueMngr.h"
 #include <thread>
 #include <vector>
 
@@ -30,7 +31,11 @@ namespace PubSub
 
         ThreadList m_threads;
 
-        void run(void *ptrClassFcn);
+        QueueMngr m_queueMngr;
+
+        Module(const Module &) = delete;
+        Module &operator=(const Module &) = delete;
+
     };
 } // namespace PubSub
 

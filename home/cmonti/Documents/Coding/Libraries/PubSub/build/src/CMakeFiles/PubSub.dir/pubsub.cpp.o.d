@@ -3,8 +3,8 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/stdc-predef.h \
  /home/cmonti/Documents/Coding/Libraries/PubSub/src/pubsub.h \
  /home/cmonti/Documents/Coding/Libraries/PubSub/src/QueueMngr.h \
- /usr/include/c++/8/queue /usr/include/c++/8/deque \
- /usr/include/c++/8/bits/stl_algobase.h \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/Message.h \
+ /usr/include/c++/8/string \
  /usr/include/c++/8/x86_64-redhat-linux/bits/c++config.h \
  /usr/include/bits/wordsize.h \
  /usr/include/c++/8/x86_64-redhat-linux/bits/os_defines.h \
@@ -12,6 +12,9 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/bits/long-double.h /usr/include/gnu/stubs.h \
  /usr/include/gnu/stubs-64.h \
  /usr/include/c++/8/x86_64-redhat-linux/bits/cpu_defines.h \
+ /usr/include/c++/8/bits/stringfwd.h /usr/include/c++/8/bits/memoryfwd.h \
+ /usr/include/c++/8/bits/char_traits.h \
+ /usr/include/c++/8/bits/stl_algobase.h \
  /usr/include/c++/8/bits/functexcept.h \
  /usr/include/c++/8/bits/exception_defines.h \
  /usr/include/c++/8/bits/cpp_type_traits.h \
@@ -25,38 +28,10 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/c++/8/bits/stl_iterator.h \
  /usr/include/c++/8/bits/ptr_traits.h /usr/include/c++/8/debug/debug.h \
  /usr/include/c++/8/bits/predefined_ops.h \
- /usr/include/c++/8/bits/allocator.h \
- /usr/include/c++/8/x86_64-redhat-linux/bits/c++allocator.h \
- /usr/include/c++/8/ext/new_allocator.h /usr/include/c++/8/new \
- /usr/include/c++/8/exception /usr/include/c++/8/bits/exception.h \
- /usr/include/c++/8/bits/exception_ptr.h \
- /usr/include/c++/8/bits/cxxabi_init_exception.h \
+ /usr/include/c++/8/bits/postypes.h /usr/include/c++/8/cwchar \
+ /usr/include/wchar.h /usr/include/bits/libc-header-start.h \
+ /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
  /usr/lib/gcc/x86_64-redhat-linux/8/include/stddef.h \
- /usr/include/c++/8/typeinfo /usr/include/c++/8/bits/hash_bytes.h \
- /usr/include/c++/8/bits/nested_exception.h \
- /usr/include/c++/8/bits/memoryfwd.h \
- /usr/include/c++/8/bits/stl_construct.h \
- /usr/include/c++/8/ext/alloc_traits.h \
- /usr/include/c++/8/bits/alloc_traits.h \
- /usr/include/c++/8/bits/stl_uninitialized.h \
- /usr/include/c++/8/bits/stl_deque.h /usr/include/c++/8/initializer_list \
- /usr/include/c++/8/bits/range_access.h /usr/include/c++/8/bits/deque.tcc \
- /usr/include/c++/8/vector /usr/include/c++/8/bits/stl_vector.h \
- /usr/include/c++/8/bits/stl_bvector.h \
- /usr/include/c++/8/bits/functional_hash.h \
- /usr/include/c++/8/bits/vector.tcc /usr/include/c++/8/bits/stl_heap.h \
- /usr/include/c++/8/bits/stl_function.h \
- /usr/include/c++/8/backward/binders.h \
- /usr/include/c++/8/bits/stl_queue.h \
- /usr/include/c++/8/bits/uses_allocator.h /usr/include/c++/8/mutex \
- /usr/include/c++/8/tuple /usr/include/c++/8/utility \
- /usr/include/c++/8/bits/stl_relops.h /usr/include/c++/8/array \
- /usr/include/c++/8/stdexcept /usr/include/c++/8/string \
- /usr/include/c++/8/bits/stringfwd.h \
- /usr/include/c++/8/bits/char_traits.h /usr/include/c++/8/bits/postypes.h \
- /usr/include/c++/8/cwchar /usr/include/wchar.h \
- /usr/include/bits/libc-header-start.h /usr/include/bits/floatn.h \
- /usr/include/bits/floatn-common.h \
  /usr/lib/gcc/x86_64-redhat-linux/8/include/stdarg.h \
  /usr/include/bits/wchar.h /usr/include/bits/types/wint_t.h \
  /usr/include/bits/types/mbstate_t.h \
@@ -66,7 +41,15 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/lib/gcc/x86_64-redhat-linux/8/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/types.h \
  /usr/include/bits/typesizes.h /usr/include/bits/stdint-intn.h \
- /usr/include/bits/stdint-uintn.h /usr/include/c++/8/bits/localefwd.h \
+ /usr/include/bits/stdint-uintn.h /usr/include/c++/8/bits/allocator.h \
+ /usr/include/c++/8/x86_64-redhat-linux/bits/c++allocator.h \
+ /usr/include/c++/8/ext/new_allocator.h /usr/include/c++/8/new \
+ /usr/include/c++/8/exception /usr/include/c++/8/bits/exception.h \
+ /usr/include/c++/8/bits/exception_ptr.h \
+ /usr/include/c++/8/bits/cxxabi_init_exception.h \
+ /usr/include/c++/8/typeinfo /usr/include/c++/8/bits/hash_bytes.h \
+ /usr/include/c++/8/bits/nested_exception.h \
+ /usr/include/c++/8/bits/localefwd.h \
  /usr/include/c++/8/x86_64-redhat-linux/bits/c++locale.h \
  /usr/include/c++/8/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/8/iosfwd \
@@ -75,6 +58,10 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/bits/uintn-identity.h \
  /usr/include/c++/8/bits/ostream_insert.h \
  /usr/include/c++/8/bits/cxxabi_forced.h \
+ /usr/include/c++/8/bits/stl_function.h \
+ /usr/include/c++/8/backward/binders.h \
+ /usr/include/c++/8/bits/range_access.h \
+ /usr/include/c++/8/initializer_list \
  /usr/include/c++/8/bits/basic_string.h \
  /usr/include/c++/8/ext/atomicity.h \
  /usr/include/c++/8/x86_64-redhat-linux/bits/gthr.h \
@@ -91,6 +78,8 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/bits/pthreadtypes.h /usr/include/bits/thread-shared-types.h \
  /usr/include/bits/pthreadtypes-arch.h /usr/include/bits/setjmp.h \
  /usr/include/c++/8/x86_64-redhat-linux/bits/atomic_word.h \
+ /usr/include/c++/8/ext/alloc_traits.h \
+ /usr/include/c++/8/bits/alloc_traits.h \
  /usr/include/c++/8/ext/string_conversions.h /usr/include/c++/8/cstdlib \
  /usr/include/stdlib.h /usr/include/bits/waitflags.h \
  /usr/include/bits/waitstatus.h /usr/include/sys/types.h \
@@ -107,8 +96,25 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/linux/errno.h /usr/include/asm/errno.h \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/bits/types/error_t.h \
+ /usr/include/c++/8/bits/functional_hash.h \
  /usr/include/c++/8/bits/basic_string.tcc \
- /usr/include/c++/8/bits/invoke.h /usr/include/c++/8/chrono \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.h \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/Endpoint.h \
+ /usr/include/c++/8/vector /usr/include/c++/8/bits/stl_construct.h \
+ /usr/include/c++/8/bits/stl_uninitialized.h \
+ /usr/include/c++/8/bits/stl_vector.h \
+ /usr/include/c++/8/bits/stl_bvector.h /usr/include/c++/8/bits/vector.tcc \
+ /usr/include/c++/8/unordered_map /usr/include/c++/8/ext/aligned_buffer.h \
+ /usr/include/c++/8/bits/hashtable.h \
+ /usr/include/c++/8/bits/hashtable_policy.h /usr/include/c++/8/tuple \
+ /usr/include/c++/8/utility /usr/include/c++/8/bits/stl_relops.h \
+ /usr/include/c++/8/array /usr/include/c++/8/stdexcept \
+ /usr/include/c++/8/bits/uses_allocator.h \
+ /usr/include/c++/8/bits/invoke.h /usr/include/c++/8/bits/unordered_map.h \
+ /usr/include/c++/8/queue /usr/include/c++/8/deque \
+ /usr/include/c++/8/bits/stl_deque.h /usr/include/c++/8/bits/deque.tcc \
+ /usr/include/c++/8/bits/stl_heap.h /usr/include/c++/8/bits/stl_queue.h \
+ /usr/include/c++/8/mutex /usr/include/c++/8/chrono \
  /usr/include/c++/8/ratio /usr/include/c++/8/limits \
  /usr/include/c++/8/ctime /usr/include/c++/8/bits/parse_numbers.h \
  /usr/include/c++/8/system_error \
@@ -120,7 +126,4 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/c++/8/bits/shared_ptr.h \
  /usr/include/c++/8/bits/shared_ptr_base.h \
  /usr/include/c++/8/bits/allocated_ptr.h \
- /usr/include/c++/8/bits/refwrap.h \
- /usr/include/c++/8/ext/aligned_buffer.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/Endpoint.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/Message.h
+ /usr/include/c++/8/bits/refwrap.h
