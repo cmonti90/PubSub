@@ -247,6 +247,30 @@ QueueMngr.cpp.s:
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/QueueMngr.cpp.s
 .PHONY : QueueMngr.cpp.s
 
+SimThread.o: SimThread.cpp.o
+.PHONY : SimThread.o
+
+# target to build an object file
+SimThread.cpp.o:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/SimThread.cpp.o
+.PHONY : SimThread.cpp.o
+
+SimThread.i: SimThread.cpp.i
+.PHONY : SimThread.i
+
+# target to preprocess a source file
+SimThread.cpp.i:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/SimThread.cpp.i
+.PHONY : SimThread.cpp.i
+
+SimThread.s: SimThread.cpp.s
+.PHONY : SimThread.s
+
+# target to generate assembly for a file
+SimThread.cpp.s:
+	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/SimThread.cpp.s
+.PHONY : SimThread.cpp.s
+
 Thread.o: Thread.cpp.o
 .PHONY : Thread.o
 
@@ -341,6 +365,9 @@ help:
 	@echo "... QueueMngr.o"
 	@echo "... QueueMngr.i"
 	@echo "... QueueMngr.s"
+	@echo "... SimThread.o"
+	@echo "... SimThread.i"
+	@echo "... SimThread.s"
 	@echo "... Thread.o"
 	@echo "... Thread.i"
 	@echo "... Thread.s"

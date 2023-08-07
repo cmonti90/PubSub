@@ -8,6 +8,7 @@
 /home/cmonti/Documents/Coding/Libraries/PubSub/./install/include/Message.h
 /home/cmonti/Documents/Coding/Libraries/PubSub/./install/include/Time.h
 /home/cmonti/Documents/Coding/Libraries/PubSub/./install/include/Thread.h
+/home/cmonti/Documents/Coding/Libraries/PubSub/./install/include/SimThread.h
 /home/cmonti/Documents/Coding/Libraries/PubSub/./install/include/Module.h
 /home/cmonti/Documents/Coding/Libraries/PubSub/./install/lib64/cmake/PubSub/PubSubTarget.cmake
 /home/cmonti/Documents/Coding/Libraries/PubSub/./install/lib64/cmake/PubSub/PubSubTarget-noconfig.cmake

@@ -21,10 +21,10 @@ namespace PubSub
     enum MessageStatus : unsigned int
     {
         FAIL = 0,
-        SUCCESS = 1
+        MESSAGE_AVAILABLE = 1
     };
 
-    typedef char *COMPONENT_LABEL;
+    typedef std::string COMPONENT_LABEL;
     typedef std::unordered_map<Message_Label, Message_Type> MessageSubscription;
     typedef std::unordered_map<Message_Label, Message *> MessageBuffer;
 
@@ -35,7 +35,7 @@ namespace PubSub
         friend class QueueMngr;
         
         Component() = delete;
-        Component(const COMPONENT_LABEL str, QueueMngr *queue_mngr);
+        Component(QueueMngr *queue_mngr, const COMPONENT_LABEL str);
         virtual ~Component() = default;
 
         virtual void initialize() = 0;
@@ -44,7 +44,7 @@ namespace PubSub
 
         COMPONENT_LABEL getComponentLabel() const;
 
-        void subscribe(Message *msg, Message_Type msg_type);
+        void subscribe(Message *msg, Message_Type msg_type = ACTIVE);
         MessageStatus peek(Message_Label &msg_label);
         void send(Message *msg);
         void receive(Message *msg);
@@ -73,5 +73,7 @@ namespace PubSub
         Component &operator=(const Component &) = delete;
     };
 } // namespace PubSub
+
+#include "QueueMngr.h"
 
 #endif /* AC0B43C3_818C_4385_BFC0_B5BCF1E2F672 */

@@ -21,4 +21,14 @@ namespace PubSub
     {
     }
 
+    double Time::getTimeNow() const
+    {
+        return timeNow;
+    }
+
+    unsigned int Time::getCounter() const
+    {
+        return counter;
+    }
+
 } // namespace PubSub

@@ -11,6 +11,7 @@ set(SOURCES pubsub.cpp
             Module.cpp
             QueueMngr.cpp
             Thread.cpp
+            SimThread.cpp
             Time.cpp)
 
 set(HEADERS 
@@ -21,8 +22,11 @@ set(HEADERS
             "Message.h"
             Time.h
             Thread.h
+            SimThread.h
             Module.h
 )
+
+add_link_options(-lpthread)
 
 add_library(${target} SHARED ${SOURCES})
 

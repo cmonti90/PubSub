@@ -1,10 +1,12 @@
 #include "Thread.h"
 #include "Time.h"
 
+#include <iostream>
+
 namespace PubSub
 {
 
-    Thread::Thread() : procIdx{0u}
+    Thread::Thread() : procIdx(0u), m_procs(), thread()
     {
     }
 
@@ -12,7 +14,7 @@ namespace PubSub
     {
     }
 
-    Thread::Thread(Thread &&obj) : procIdx{obj.procIdx}, m_procs{std::move(obj.m_procs)}, thread{std::move(obj.thread)}
+    Thread::Thread(Thread &&obj) : procIdx(obj.procIdx), m_procs(std::move(obj.m_procs)), thread(std::move(obj.thread))
     {
     }
 
@@ -32,54 +34,59 @@ namespace PubSub
 
     void Thread::run(const ThreadState &threadState)
     {
+        std::cout << "Thread::run() procIdx: " << procIdx << ", m_procs.size() = " << m_procs.size() << ", threadState = " << threadState << std::endl;
+
         if (procIdx < m_procs.size())
         {
+            std::cout << "Thread::run() proc: " << m_procs[procIdx]->getComponentLabel();
+
             if (threadState == ThreadState::INITIALIZE)
             {
+                std::cout << " initialize()" << std::endl;
+
                 thread = std::thread(&Component::initialize, m_procs[procIdx]);
             }
             else if (threadState == ThreadState::UPDATE)
             {
+                std::cout << " update()" << std::endl;
+
                 if (m_procs[procIdx]->hasActiveMessage())
                 {
+                    std::cout << " hasActiveMessage()" << std::endl;
+
                     thread = std::thread(&Component::update, m_procs[procIdx]);
                 }
             }
             else if (threadState == ThreadState::FINALIZE)
             {
+                std::cout << " finalize()" << std::endl;
+
                 thread = std::thread(&Component::finalize, m_procs[procIdx]);
             }
 
             procIdx++;
         }
+
+        std::cout << "Finished Thread::run()" << std::endl;
     }
 
-    void Thread::runSingular(const ThreadState &threadState, bool shouldRun)
+    void Thread::stop()
     {
-        if (threadState == ThreadState::INITIALIZE)
+        if (thread.joinable())
         {
-            thread = std::thread(&Component::initialize, m_procs[procIdx]);
+            thread.join();
         }
-        else if (threadState == ThreadState::UPDATE)
-        {
-            if (shouldRun)
-            {
-                thread = std::thread(&Component::update, m_procs[procIdx]);
-            }
-        }
-        else if (threadState == ThreadState::FINALIZE)
-        {
-            thread = std::thread(&Component::finalize, m_procs[procIdx]);
-        }
-
-        join();
-
-        procIdx++;
     }
 
     void Thread::join()
     {
-        thread.join();
+        std::cout << "Thread::joinable()" << std::endl;
+
+        if (thread.joinable())
+        {
+            std::cout << "Thread::join()" << std::endl;
+            thread.join();
+        }
     }
 
     void Thread::addComp(Component *comp)

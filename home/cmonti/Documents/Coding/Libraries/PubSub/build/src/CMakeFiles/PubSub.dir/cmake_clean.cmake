@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PubSub.dir/Module.cpp.o.d"
   "CMakeFiles/PubSub.dir/QueueMngr.cpp.o"
   "CMakeFiles/PubSub.dir/QueueMngr.cpp.o.d"
+  "CMakeFiles/PubSub.dir/SimThread.cpp.o"
+  "CMakeFiles/PubSub.dir/SimThread.cpp.o.d"
   "CMakeFiles/PubSub.dir/Thread.cpp.o"
   "CMakeFiles/PubSub.dir/Thread.cpp.o.d"
   "CMakeFiles/PubSub.dir/Time.cpp.o"

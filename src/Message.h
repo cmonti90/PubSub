@@ -10,9 +10,18 @@ namespace PubSub
     class Message
     {
     public:
-        static const Message_Label MESSAGE_LABEL;
+        // Message() : m_label("") {}
+        Message(const Message_Label str) : m_label(str) {}
+        // Message(const Message &obj) = default;
 
-        virtual void copyData(Message *msg) = 0;
+        Message& operator=(const Message &obj) = default;
+
+        // virtual Message_Label getMessageLabel() = 0;
+        Message_Label getMessageLabel(){ return m_label; };
+        virtual ~Message() = default;
+
+    private:
+        Message_Label m_label;
     };
 
 } // namespace PubSub

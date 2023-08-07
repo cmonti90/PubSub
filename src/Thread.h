@@ -4,6 +4,7 @@
 #include "Component.h"
 #include <vector>
 #include <thread>
+#include <pthread.h>
 
 namespace PubSub
 {
@@ -11,8 +12,7 @@ namespace PubSub
     class Thread
     {
     public:
-
-        enum class ThreadState
+        enum ThreadState
         {
             INITIALIZE,
             UPDATE,
@@ -20,27 +20,28 @@ namespace PubSub
         };
 
         Thread();
-        ~Thread();
+        virtual ~Thread();
         Thread(Thread &&obj);
 
         Thread &operator=(Thread &&obj);
 
-        void run(const ThreadState &state);
-        void runSingular(const ThreadState &state, bool shouldRun = true);
+        virtual void run(const ThreadState &state);
+        void stop();
 
         void addComp(Component *comp);
         void join();
 
-        unsigned int getProcessCount() const { return m_procs.size(); }
+        virtual unsigned int getProcessCount() const { return m_procs.size(); }
         void resetProcessCount() { procIdx = 0u; }
 
         void passSubscriptionLists();
 
-    private:
+    protected:
         unsigned int procIdx{0u};
         ComponentList m_procs;
         std::thread thread;
 
+    private:
         Thread(const Thread &) = delete;
         Thread &operator=(const Thread &) = delete;
     };

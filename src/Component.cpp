@@ -2,9 +2,10 @@
 #include "Component.h"
 #include "QueueMngr.h"
 
+#include <iostream>
 namespace PubSub
 {
-    Component::Component(const COMPONENT_LABEL str, QueueMngr *queue_mngr)
+    Component::Component(QueueMngr *queue_mngr, const COMPONENT_LABEL str)
         : Component_Label(str),
           m_queue_mngr(queue_mngr)
     {
@@ -17,7 +18,18 @@ namespace PubSub
 
     void Component::subscribe(Message *msg, Message_Type msg_type)
     {
-        m_subscribed_msg.insert(std::make_pair(msg->MESSAGE_LABEL, msg_type));
+        std::unique_lock<std::mutex> lock(m_mutex);
+
+        std::cout << "COMPONENT: Component " << Component_Label << " subscribing" << std::endl;
+
+        std::cout << "COMPONENT: Component " << Component_Label << " subscribing to " << msg->getMessageLabel() << std::endl;
+
+        m_subscribed_msg.insert(std::make_pair(msg->getMessageLabel(), msg_type));
+
+        std::cout << "COMPONENT: Component " << Component_Label << " subscribed to " << msg->getMessageLabel() << std::endl;
+
+        lock.unlock();
+        m_condition.notify_one();
     }
 
     MessageStatus Component::peek(Message_Label &msg_label)
@@ -34,13 +46,13 @@ namespace PubSub
             else
             {
                 msg_label = m_active_msg_buffer.begin()->first;
-                status = SUCCESS;
+                status = MESSAGE_AVAILABLE;
             }
         }
         else
         {
             msg_label = m_passive_msg_buffer.begin()->first;
-            status = SUCCESS;
+            status = MESSAGE_AVAILABLE;
         }
 
         lock.unlock();
@@ -58,19 +70,23 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock(m_mutex);
 
-        switch (m_subscribed_msg.find(msg->MESSAGE_LABEL)->second)
+        switch (m_subscribed_msg.find(msg->getMessageLabel())->second)
         {
         case ACTIVE:
         {
-            *msg = *(m_active_msg_buffer.find(msg->MESSAGE_LABEL)->second);
-            m_active_msg_buffer.erase(msg->MESSAGE_LABEL);
+            *msg = *(m_active_msg_buffer.find(msg->getMessageLabel())->second);
+
+            std::cout << "COMPONENT::receive(): Component " << Component_Label << " received " << msg->getMessageLabel() << std::endl;
+            std::cout << "COMPONENT::receive(): Message " << msg->getMessageLabel() << std::endl;
+
+            m_active_msg_buffer.erase(msg->getMessageLabel());
         }
         break;
 
         case PASSIVE:
         {
-            *msg = *(m_passive_msg_buffer.find(msg->MESSAGE_LABEL)->second);
-            m_passive_msg_buffer.erase(msg->MESSAGE_LABEL);
+            *msg = *(m_passive_msg_buffer.find(msg->getMessageLabel())->second);
+            m_passive_msg_buffer.erase(msg->getMessageLabel());
         }
         break;
         }
@@ -81,7 +97,7 @@ namespace PubSub
 
     void Component::writeToBuffer(Message *msg)
     {
-        switch (m_subscribed_msg.find(msg->MESSAGE_LABEL)->second)
+        switch (m_subscribed_msg.find(msg->getMessageLabel())->second)
         {
 
         case ACTIVE:
@@ -107,13 +123,13 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock(m_mutex);
 
-        if (buffer.count(msg->MESSAGE_LABEL))
+        if (buffer.count(msg->getMessageLabel()))
         {
-            *(buffer[msg->MESSAGE_LABEL]) = *msg;
+            *(buffer[msg->getMessageLabel()]) = *msg;
         }
         else
         {
-            buffer.insert(std::make_pair(msg->MESSAGE_LABEL, msg));
+            buffer.insert(std::make_pair(msg->getMessageLabel(), msg));
         }
 
         lock.unlock();

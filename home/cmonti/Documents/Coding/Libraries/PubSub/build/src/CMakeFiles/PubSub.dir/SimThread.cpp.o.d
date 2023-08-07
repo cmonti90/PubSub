@@ -1,8 +1,9 @@
-src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/pubsub.cpp \
+src/CMakeFiles/PubSub.dir/SimThread.cpp.o: \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/SimThread.cpp \
  /usr/include/stdc-predef.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/pubsub.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/QueueMngr.h \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/SimThread.h \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/SimComponent.h \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.h \
  /home/cmonti/Documents/Coding/Libraries/PubSub/src/Message.h \
  /usr/include/c++/8/string \
  /usr/include/c++/8/x86_64-redhat-linux/bits/c++config.h \
@@ -97,9 +98,8 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
  /usr/include/bits/types/error_t.h \
  /usr/include/c++/8/bits/functional_hash.h \
- /usr/include/c++/8/bits/basic_string.tcc \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.h \
- /usr/include/c++/8/vector /usr/include/c++/8/bits/stl_construct.h \
+ /usr/include/c++/8/bits/basic_string.tcc /usr/include/c++/8/vector \
+ /usr/include/c++/8/bits/stl_construct.h \
  /usr/include/c++/8/bits/stl_uninitialized.h \
  /usr/include/c++/8/bits/stl_vector.h \
  /usr/include/c++/8/bits/stl_bvector.h /usr/include/c++/8/bits/vector.tcc \
@@ -122,11 +122,11 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/c++/8/bits/shared_ptr.h \
  /usr/include/c++/8/bits/shared_ptr_base.h \
  /usr/include/c++/8/bits/allocated_ptr.h \
- /usr/include/c++/8/bits/refwrap.h /usr/include/c++/8/queue \
- /usr/include/c++/8/deque /usr/include/c++/8/bits/stl_deque.h \
- /usr/include/c++/8/bits/deque.tcc /usr/include/c++/8/bits/stl_heap.h \
- /usr/include/c++/8/bits/stl_queue.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/SimComponent.h \
+ /usr/include/c++/8/bits/refwrap.h \
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/QueueMngr.h \
+ /usr/include/c++/8/queue /usr/include/c++/8/deque \
+ /usr/include/c++/8/bits/stl_deque.h /usr/include/c++/8/bits/deque.tcc \
+ /usr/include/c++/8/bits/stl_heap.h /usr/include/c++/8/bits/stl_queue.h \
  /home/cmonti/Documents/Coding/Libraries/PubSub/src/Thread.h \
  /usr/include/c++/8/thread /usr/include/c++/8/memory \
  /usr/include/c++/8/bits/stl_tempbuf.h \
@@ -135,6 +135,19 @@ src/CMakeFiles/PubSub.dir/pubsub.cpp.o: \
  /usr/include/c++/8/bits/atomic_base.h \
  /usr/include/c++/8/bits/atomic_lockfree_defines.h \
  /usr/include/c++/8/backward/auto_ptr.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/Module.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/SimThread.h \
- /home/cmonti/Documents/Coding/Libraries/PubSub/src/Time.h
+ /home/cmonti/Documents/Coding/Libraries/PubSub/src/Time.h \
+ /usr/include/c++/8/iostream /usr/include/c++/8/ostream \
+ /usr/include/c++/8/ios /usr/include/c++/8/bits/ios_base.h \
+ /usr/include/c++/8/bits/locale_classes.h \
+ /usr/include/c++/8/bits/locale_classes.tcc /usr/include/c++/8/streambuf \
+ /usr/include/c++/8/bits/streambuf.tcc \
+ /usr/include/c++/8/bits/basic_ios.h \
+ /usr/include/c++/8/bits/locale_facets.h /usr/include/c++/8/cwctype \
+ /usr/include/wctype.h /usr/include/bits/wctype-wchar.h \
+ /usr/include/c++/8/x86_64-redhat-linux/bits/ctype_base.h \
+ /usr/include/c++/8/bits/streambuf_iterator.h \
+ /usr/include/c++/8/x86_64-redhat-linux/bits/ctype_inline.h \
+ /usr/include/c++/8/bits/locale_facets.tcc \
+ /usr/include/c++/8/bits/basic_ios.tcc \
+ /usr/include/c++/8/bits/ostream.tcc /usr/include/c++/8/istream \
+ /usr/include/c++/8/bits/istream.tcc

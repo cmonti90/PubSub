@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "SimComponent.h"
 #include "Thread.h"
+#include "SimThread.h"
 #include "QueueMngr.h"
 #include "Time.h"
 #include <thread>
@@ -19,35 +20,36 @@ namespace PubSub
         ~Module() = default;
 
         void addThread(Thread &thread);
-        void addCompToThread(Thread &thread, Component *comp);
+        void addCompToThread(Component *comp);
 
         void addSimComp(SimComponent *comp);
 
         void initialize();
         void start();
+        void stop(bool over_ride = false);
         void finalize();
 
         void run(const Thread::ThreadState &threadState);
 
-    private:
+    protected:
         unsigned int m_threadCount{0u};
         unsigned int maxProcCount{0u};
 
         ThreadList m_threads;
 
-        std::vector<Thread> m_simThread;
+        SimThread m_simThread;
 
         QueueMngr m_queueMngr;
 
         Time m_time;
 
+    private:
         void runSW(const Thread::ThreadState &threadState);
         void runSim(const Thread::ThreadState &threadState);
         void passSubscriptionLists();
 
         Module(const Module &) = delete;
         Module &operator=(const Module &) = delete;
-
     };
 } // namespace PubSub
 

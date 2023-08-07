@@ -96,6 +96,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Message.h"
     "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Time.h"
     "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Thread.h"
+    "/home/cmonti/Documents/Coding/Libraries/PubSub/src/SimThread.h"
     "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Module.h"
     )
 endif()

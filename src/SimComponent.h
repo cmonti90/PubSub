@@ -11,8 +11,8 @@ namespace PubSub
         friend class QueueMngr;
 
         SimComponent() = delete;
-        SimComponent(const COMPONENT_LABEL str, QueueMngr* queue_mngr, unsigned int rate)
-        : Component(str, queue_mngr), model_rate(rate)
+        SimComponent(QueueMngr* queue_mngr, unsigned int rate, const COMPONENT_LABEL str)
+        : Component(queue_mngr, str), model_rate(rate)
         {
         }
 
