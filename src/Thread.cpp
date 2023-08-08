@@ -80,11 +80,8 @@ namespace PubSub
 
     void Thread::join()
     {
-        std::cout << "Thread::joinable()" << std::endl;
-
         if (thread.joinable())
         {
-            std::cout << "Thread::join()" << std::endl;
             thread.join();
         }
     }

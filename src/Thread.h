@@ -34,7 +34,7 @@ namespace PubSub
         virtual unsigned int getProcessCount() const { return m_procs.size(); }
         void resetProcessCount() { procIdx = 0u; }
 
-        void passSubscriptionLists();
+        virtual void passSubscriptionLists();
 
     protected:
         unsigned int procIdx{0u};

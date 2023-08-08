@@ -5,7 +5,7 @@
 #include <iostream>
 namespace PubSub
 {
-    Component::Component(QueueMngr *queue_mngr, const COMPONENT_LABEL str)
+    Component::Component(std::shared_ptr<QueueMngr> &queue_mngr, const COMPONENT_LABEL str)
         : Component_Label(str),
           m_queue_mngr(queue_mngr)
     {
@@ -63,6 +63,7 @@ namespace PubSub
 
     void Component::send(Message *msg)
     {
+        std::cout << "COMPONENT::send(): Component " << Component_Label << " sending " << msg->getMessageLabel() << " with data = " << msg->dataStructure() << std::endl;
         m_queue_mngr->push(msg);
     }
 
@@ -74,10 +75,20 @@ namespace PubSub
         {
         case ACTIVE:
         {
-            *msg = *(m_active_msg_buffer.find(msg->getMessageLabel())->second);
 
-            std::cout << "COMPONENT::receive(): Component " << Component_Label << " received " << msg->getMessageLabel() << std::endl;
+            std::cout << "COMPONENT::receive(): Component " << Component_Label << " received " << m_active_msg_buffer[msg->getMessageLabel()]->getMessageLabel() << " with data = " << m_active_msg_buffer.find(msg->getMessageLabel())->second->dataStructure() << std::endl;
             std::cout << "COMPONENT::receive(): Message " << msg->getMessageLabel() << std::endl;
+
+            if (m_active_msg_buffer.count(msg->getMessageLabel()))
+            {
+                msg->copy(m_active_msg_buffer[msg->getMessageLabel()].get());
+            }
+            else
+            {
+                m_active_msg_buffer.insert(std::make_pair(msg->getMessageLabel(), std::unique_ptr<Message>(msg->clone())));
+            }
+
+            std::cout << "COMPONENT::receive(): Component " << Component_Label << " got data = " << msg->dataStructure() << std::endl;
 
             m_active_msg_buffer.erase(msg->getMessageLabel());
         }
@@ -85,7 +96,17 @@ namespace PubSub
 
         case PASSIVE:
         {
-            *msg = *(m_passive_msg_buffer.find(msg->getMessageLabel())->second);
+            m_passive_msg_buffer.find(msg->getMessageLabel())->second->copy(msg);
+
+            if (m_passive_msg_buffer.count(msg->getMessageLabel()))
+            {
+                msg->copy(m_passive_msg_buffer[msg->getMessageLabel()].get());
+            }
+            else
+            {
+                m_passive_msg_buffer.insert(std::make_pair(msg->getMessageLabel(), std::unique_ptr<Message>(msg->clone())));
+            }
+
             m_passive_msg_buffer.erase(msg->getMessageLabel());
         }
         break;
@@ -103,6 +124,8 @@ namespace PubSub
         case ACTIVE:
         {
             writeToBuffer(msg, m_active_msg_buffer);
+
+            std::cout << "COMPONENT::writeToBuffer(): Component " << Component_Label << " got m_active_msg_buffer = " << msg->getMessageLabel() << " with data = " << m_active_msg_buffer[msg->getMessageLabel()]->dataStructure() << std::endl;
         }
         break;
 
@@ -123,13 +146,21 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock(m_mutex);
 
+        std::cout << "COMPONENT::writeToBuffer(): Component " << Component_Label << " writing " << msg->getMessageLabel() << " with data = " << msg->dataStructure() << std::endl;
+
         if (buffer.count(msg->getMessageLabel()))
         {
-            *(buffer[msg->getMessageLabel()]) = *msg;
+            buffer[msg->getMessageLabel()]->copy(msg);
+
+            std::cout << "COMPONENT::writeToBuffer(): Component " << Component_Label << "buffer[" << msg->getMessageLabel() << "]->copy(msg)" << std::endl;
+            std::cout << "COMPONENT::writeToBuffer(): buffer[msg->getMessageLabel()] = " << buffer[msg->getMessageLabel()]->dataStructure() << std::endl;
         }
         else
         {
-            buffer.insert(std::make_pair(msg->getMessageLabel(), msg));
+            buffer.insert(std::make_pair(msg->getMessageLabel(), std::unique_ptr<Message>(msg->clone())));
+
+            std::cout << "COMPONENT::writeToBuffer(): Component " << Component_Label << "buffer.insert(std::make_pair(" << msg->getMessageLabel() << ", std::unique_ptr<Message>(msg->clone())))" << std::endl;
+            std::cout << "COMPONENT::writeToBuffer(): buffer[msg->getMessageLabel()] = " << buffer[msg->getMessageLabel()]->dataStructure() << std::endl;
         }
 
         lock.unlock();

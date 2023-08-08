@@ -5,7 +5,7 @@
 namespace PubSub
 {
 
-    Module::Module() : m_threadCount(0u), maxProcCount(0u), m_queueMngr()
+    Module::Module() : m_threadCount(0u), maxProcCount(0u), m_queueMngr(new QueueMngr()), m_time()
     {
     }
 
@@ -105,9 +105,7 @@ namespace PubSub
                 m_threads[threadIdx].join();
             }
 
-            std::cout << "MODULE: dispatching" << std::endl;
-
-            m_queueMngr.dispatch();
+            dispatchMessages(threadState);
         }
 
         std::cout << "MODULE: Resetting Process Count" << std::endl;
@@ -124,10 +122,19 @@ namespace PubSub
         {
             std::cout << "MODULE: Running Sim Thread" << std::endl;
             m_simThread.run(threadState, m_time.getCounter());
-            m_queueMngr.dispatch();
+
+            dispatchMessages(threadState);
         }
 
         m_simThread.resetProcessCount();
+    }
+
+    void Module::dispatchMessages(const Thread::ThreadState &threadState)
+    {
+        if (threadState == Thread::ThreadState::UPDATE)
+        {
+            m_queueMngr->dispatch();
+        }
     }
 
 } // namespace PubSub

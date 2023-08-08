@@ -9,6 +9,7 @@
 #include "Time.h"
 #include <thread>
 #include <vector>
+#include <memory>
 
 namespace PubSub
 {
@@ -39,7 +40,7 @@ namespace PubSub
 
         SimThread m_simThread;
 
-        QueueMngr m_queueMngr;
+        std::shared_ptr<QueueMngr> m_queueMngr;
 
         Time m_time;
 
@@ -47,6 +48,7 @@ namespace PubSub
         void runSW(const Thread::ThreadState &threadState);
         void runSim(const Thread::ThreadState &threadState);
         void passSubscriptionLists();
+        void dispatchMessages(const Thread::ThreadState &threadState);
 
         Module(const Module &) = delete;
         Module &operator=(const Module &) = delete;

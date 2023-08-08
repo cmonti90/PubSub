@@ -64,4 +64,14 @@ namespace PubSub
         m_simProcs.push_back(comp);
     }
 
+    void SimThread::passSubscriptionLists()
+    {
+        for (unsigned int i{0u}; i < m_simProcs.size(); i++)
+        {
+            thread = std::thread(&Component::giveSubscriptionListToQueueMngr, m_simProcs[i]);
+
+            join();
+        }
+    }
+
 } // namespace PubSub

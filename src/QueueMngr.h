@@ -8,6 +8,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <unordered_map>
+#include <memory>
 
 namespace PubSub
 {
@@ -27,7 +28,7 @@ namespace PubSub
         void getSubscriptionList(Component* comp, MessageSubscription &list);
 
     private:
-        std::queue<Message *> m_queue;
+        std::queue<Message*> m_queue;
         std::mutex m_mutex;
         std::condition_variable m_condition;
         SubcriberList m_subscriberList;

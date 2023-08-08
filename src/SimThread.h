@@ -24,6 +24,8 @@ namespace PubSub
         void addComp(SimComponent *comp);
 
         unsigned int getProcessCount() const { return m_simProcs.size(); }
+        
+        virtual void passSubscriptionLists() override;
 
     private:
         SimComponentList m_simProcs;

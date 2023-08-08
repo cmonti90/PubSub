@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <mutex>
 #include <condition_variable>
+#include <memory>
 
 namespace PubSub
 {
@@ -26,7 +27,7 @@ namespace PubSub
 
     typedef std::string COMPONENT_LABEL;
     typedef std::unordered_map<Message_Label, Message_Type> MessageSubscription;
-    typedef std::unordered_map<Message_Label, Message *> MessageBuffer;
+    typedef std::unordered_map<Message_Label, std::unique_ptr<Message>> MessageBuffer;
 
     class QueueMngr;
     class Component
@@ -35,7 +36,7 @@ namespace PubSub
         friend class QueueMngr;
         
         Component() = delete;
-        Component(QueueMngr *queue_mngr, const COMPONENT_LABEL str);
+        Component(std::shared_ptr<QueueMngr>& queue_mngr, const COMPONENT_LABEL str);
         virtual ~Component() = default;
 
         virtual void initialize() = 0;
@@ -45,8 +46,11 @@ namespace PubSub
         COMPONENT_LABEL getComponentLabel() const;
 
         void subscribe(Message *msg, Message_Type msg_type = ACTIVE);
+
         MessageStatus peek(Message_Label &msg_label);
+
         void send(Message *msg);
+
         void receive(Message *msg);
 
         bool hasActiveMessage() const;
@@ -61,7 +65,7 @@ namespace PubSub
 
         MessageSubscription m_subscribed_msg;
 
-        QueueMngr *m_queue_mngr;
+        std::shared_ptr<QueueMngr> m_queue_mngr;
 
         std::mutex m_mutex;
         std::condition_variable m_condition;
