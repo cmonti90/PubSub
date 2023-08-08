@@ -1,6 +1,6 @@
 #!/bin/sh
 
-buildToDir="$(git rev-parse --show-toplevel)/build"
+buildToDir="build"
 
 SCRIPT_DIR="$( dirname -- "${BASH_SOURCE[0]}" )"
 
