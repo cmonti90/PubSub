@@ -1,8 +1,6 @@
 #include "Thread.h"
 #include "Time.h"
 
-#include <iostream>
-
 namespace PubSub
 {
 
@@ -34,40 +32,26 @@ namespace PubSub
 
     void Thread::run(const ThreadState &threadState)
     {
-        std::cout << "Thread::run() procIdx: " << procIdx << ", m_procs.size() = " << m_procs.size() << ", threadState = " << threadState << std::endl;
-
         if (procIdx < m_procs.size())
         {
-            std::cout << "Thread::run() proc: " << m_procs[procIdx]->getComponentLabel();
-
             if (threadState == ThreadState::INITIALIZE)
             {
-                std::cout << " initialize()" << std::endl;
-
                 thread = std::thread(&Component::initialize, m_procs[procIdx]);
             }
             else if (threadState == ThreadState::UPDATE)
             {
-                std::cout << " update()" << std::endl;
-
                 if (m_procs[procIdx]->hasActiveMessage())
                 {
-                    std::cout << " hasActiveMessage()" << std::endl;
-
                     thread = std::thread(&Component::update, m_procs[procIdx]);
                 }
             }
             else if (threadState == ThreadState::FINALIZE)
             {
-                std::cout << " finalize()" << std::endl;
-
                 thread = std::thread(&Component::finalize, m_procs[procIdx]);
             }
 
             procIdx++;
         }
-
-        std::cout << "Finished Thread::run()" << std::endl;
     }
 
     void Thread::stop()

@@ -11,8 +11,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/PubSub.dir/Thread.cpp.o.d"
   "CMakeFiles/PubSub.dir/Time.cpp.o"
   "CMakeFiles/PubSub.dir/Time.cpp.o.d"
-  "CMakeFiles/PubSub.dir/pubsub.cpp.o"
-  "CMakeFiles/PubSub.dir/pubsub.cpp.o.d"
   "libPubSub.pdb"
   "libPubSub.so"
   "libPubSub.so.1"

@@ -23,9 +23,6 @@ namespace PubSub
         virtual void copy(const Message* msg) = 0;
 
         Message_Label m_label;
-
-        // debug
-        virtual double dataStructure() const = 0;
     };
 
 } // namespace PubSub

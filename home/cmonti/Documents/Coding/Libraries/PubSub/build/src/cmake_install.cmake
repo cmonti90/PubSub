@@ -89,7 +89,6 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/home/cmonti/Documents/Coding/Libraries/PubSub/src/pubsub.h"
     "/home/cmonti/Documents/Coding/Libraries/PubSub/src/QueueMngr.h"
     "/home/cmonti/Documents/Coding/Libraries/PubSub/src/Component.h"
     "/home/cmonti/Documents/Coding/Libraries/PubSub/src/SimComponent.h"

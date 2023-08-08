@@ -319,30 +319,6 @@ Time.cpp.s:
 	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/Time.cpp.s
 .PHONY : Time.cpp.s
 
-pubsub.o: pubsub.cpp.o
-.PHONY : pubsub.o
-
-# target to build an object file
-pubsub.cpp.o:
-	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/pubsub.cpp.o
-.PHONY : pubsub.cpp.o
-
-pubsub.i: pubsub.cpp.i
-.PHONY : pubsub.i
-
-# target to preprocess a source file
-pubsub.cpp.i:
-	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/pubsub.cpp.i
-.PHONY : pubsub.cpp.i
-
-pubsub.s: pubsub.cpp.s
-.PHONY : pubsub.s
-
-# target to generate assembly for a file
-pubsub.cpp.s:
-	cd /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/pubsub.cpp.s
-.PHONY : pubsub.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -374,9 +350,6 @@ help:
 	@echo "... Time.o"
 	@echo "... Time.i"
 	@echo "... Time.s"
-	@echo "... pubsub.o"
-	@echo "... pubsub.i"
-	@echo "... pubsub.s"
 .PHONY : help
 
 

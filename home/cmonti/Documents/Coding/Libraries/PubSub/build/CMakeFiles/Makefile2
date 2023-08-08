@@ -96,12 +96,12 @@ src/clean: src/CMakeFiles/PubSub.dir/clean
 src/CMakeFiles/PubSub.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/PubSub.dir/build.make src/CMakeFiles/PubSub.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target PubSub"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target PubSub"
 .PHONY : src/CMakeFiles/PubSub.dir/all
 
 # Build rule for subdir invocation for target.
 src/CMakeFiles/PubSub.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/PubSub.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/cmonti/Documents/Coding/Libraries/PubSub/home/cmonti/Documents/Coding/Libraries/PubSub/build/CMakeFiles 0
 .PHONY : src/CMakeFiles/PubSub.dir/rule

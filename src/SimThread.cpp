@@ -1,6 +1,5 @@
 #include "SimThread.h"
 #include "Time.h"
-#include <iostream>
 
 namespace PubSub
 {
@@ -33,19 +32,14 @@ namespace PubSub
 
     void SimThread::run(const ThreadState &threadState, unsigned int counter)
     {
-        std::cout << "Running sim thread" << std::endl;
         if (threadState == ThreadState::INITIALIZE)
         {
-            std::cout << "Running sim thread initialize" << std::endl;
             thread = std::thread(&SimComponent::initialize, m_simProcs[procIdx]);
         }
         else if (threadState == ThreadState::UPDATE)
         {
-            std::cout << "Running sim thread update" << std::endl;
             if ((counter % static_cast<unsigned int>(m_simProcs[procIdx]->getModelRate() / Time::SimulationRunRate)) == 0)
             {
-
-                std::cout << "Running " << m_simProcs[procIdx]->getComponentLabel() << " sim thread update" << std::endl;
                 thread = std::thread(&SimComponent::update, m_simProcs[procIdx]);
             }
         }

@@ -6,17 +6,14 @@ set(version 1.0.0)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(SOURCES pubsub.cpp
-            Component.cpp
+set(SOURCES Component.cpp
             Module.cpp
             QueueMngr.cpp
             Thread.cpp
             SimThread.cpp
             Time.cpp)
 
-set(HEADERS 
-            pubsub.h
-            QueueMngr.h
+set(HEADERS QueueMngr.h
             Component.h
             SimComponent.h
             "Message.h"
