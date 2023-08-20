@@ -30,14 +30,14 @@ namespace PubSub
 
     void Module::initialize()
     {
-        run(Thread::ThreadState::INITIALIZE);
+        run(ThreadBase::ThreadState::INITIALIZE);
 
         passSubscriptionLists();
     }
 
     void Module::start()
     {
-        run(Thread::ThreadState::UPDATE);
+        run(ThreadBase::ThreadState::UPDATE);
     }
 
     void Module::stop(bool over_ride)
@@ -64,7 +64,7 @@ namespace PubSub
 
     void Module::finalize()
     {
-        run(Thread::ThreadState::FINALIZE);
+        run(ThreadBase::ThreadState::FINALIZE);
     }
 
     void Module::passSubscriptionLists()
@@ -77,7 +77,7 @@ namespace PubSub
         m_simThread.passSubscriptionLists();
     }
 
-    void Module::run(const Thread::ThreadState &threadState)
+    void Module::run(const ThreadBase::ThreadState &threadState)
     {
         runSW(threadState);
 
@@ -86,7 +86,7 @@ namespace PubSub
         runSim(threadState);
     }
 
-    void Module::runSW(const Thread::ThreadState &threadState)
+    void Module::runSW(const ThreadBase::ThreadState &threadState)
     {
         for (unsigned int procIdx{0u}; procIdx < maxProcCount; procIdx++)
         {
@@ -110,7 +110,7 @@ namespace PubSub
         }
     }
 
-    void Module::runSim(const Thread::ThreadState &threadState)
+    void Module::runSim(const ThreadBase::ThreadState &threadState)
     {
         for (unsigned int procIdx{0u}; procIdx < m_simThread.getProcessCount(); procIdx++)
         {
@@ -122,7 +122,7 @@ namespace PubSub
         m_simThread.resetProcessCount();
     }
 
-    void Module::dispatchMessages(const Thread::ThreadState &threadState)
+    void Module::dispatchMessages(const ThreadBase::ThreadState &threadState)
     {
         if (threadState == Thread::ThreadState::UPDATE)
         {

@@ -3,6 +3,8 @@
 
 #include "Message.h"
 
+#include "Payload.h"
+
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -26,17 +28,17 @@ namespace PubSub
     };
 
     typedef std::string COMPONENT_LABEL;
-    typedef std::unordered_map<Message_Label, Message_Type> MessageSubscription;
-    typedef std::unordered_map<Message_Label, std::unique_ptr<Message>> MessageBuffer;
+    typedef std::unordered_map<Message_Label_Name, Message_Type> MessageSubscription;
+    typedef std::unordered_map<Message_Label_Name, std::unique_ptr<Message>> MessageBuffer;
 
     class QueueMngr;
     class Component
     {
     public:
         friend class QueueMngr;
-        
+
         Component() = delete;
-        Component(std::shared_ptr<QueueMngr>& queue_mngr, const COMPONENT_LABEL str);
+        Component( std::shared_ptr<QueueMngr>& queue_mngr, const COMPONENT_LABEL str );
         virtual ~Component() = default;
 
         virtual void initialize() = 0;
@@ -45,16 +47,39 @@ namespace PubSub
 
         COMPONENT_LABEL getComponentLabel() const;
 
-        void subscribe(Message *msg, Message_Type msg_type = ACTIVE);
+        void subscribe( const Message* msg, Message_Type msg_type = ACTIVE );
 
-        MessageStatus peek(Message_Label &msg_label);
+        template <typename Msg, typename Container>
+        void subscribe( const Container& data, Message_Type msg_type = ACTIVE )
+        {
+            subscribe( static_cast< const InputPayload<Msg>&>( data ).getInternalMsg(), msg_type );
+        }
 
-        void send(Message *msg);
+        MessageStatus peek( Message_Label& msg_label );
 
-        void receive(Message *msg);
+        void send( const Message* msg );
+
+        template <typename Msg, typename Container>
+        void send( Container& data )
+        {
+            static_cast< OutputPayload<Msg>&>( data ).updateInternalPayload();
+            send( static_cast< OutputPayload<Msg>&>( data ).getInternalMsg() );
+        }
+
+        void receive( Message* msg );
+
+        template <typename Msg, typename Container>
+        void receive( Container& data )
+        {
+            receive( static_cast< InputPayload<Msg>&>( data ).getInternalMsg() );
+            static_cast< InputPayload<Msg>&>( data ).updateExternalPayload();
+        }
+
+        void removeTopMessage();
+        void clear();
 
         bool hasActiveMessage() const;
-        
+
         void giveSubscriptionListToQueueMngr();
 
     private:
@@ -70,11 +95,11 @@ namespace PubSub
         std::mutex m_mutex;
         std::condition_variable m_condition;
 
-        void writeToBuffer(Message *msg);
-        void writeToBuffer(Message *msg, MessageBuffer &buffer);
+        void writeToBuffer( Message* msg );
+        void writeToBuffer( Message* msg, MessageBuffer& buffer );
 
-        Component(const Component &) = delete;
-        Component &operator=(const Component &) = delete;
+        Component( const Component& ) = delete;
+        Component& operator=( const Component& ) = delete;
     };
 } // namespace PubSub
 

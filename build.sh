@@ -2,10 +2,10 @@
 
 buildToDir="build"
 
-SCRIPT_DIR="$( dirname -- "${BASH_SOURCE[0]}" )"
-
 curDir=${PWD}
 oldDir=${OLDPWD}
+
+SCRIPT_DIR="$( dirname -- "${BASH_SOURCE[0]}" )"
 
 SOURCE=${BASH_SOURCE[0]}
 while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink

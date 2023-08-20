@@ -30,7 +30,7 @@ namespace PubSub
         void stop(bool over_ride = false);
         void finalize();
 
-        void run(const Thread::ThreadState &threadState);
+        void run(const ThreadBase::ThreadState &threadState);
 
     protected:
         unsigned int m_threadCount{0u};
@@ -45,10 +45,10 @@ namespace PubSub
         Time m_time;
 
     private:
-        void runSW(const Thread::ThreadState &threadState);
-        void runSim(const Thread::ThreadState &threadState);
+        void runSW(const ThreadBase::ThreadState &threadState);
+        void runSim(const ThreadBase::ThreadState &threadState);
         void passSubscriptionLists();
-        void dispatchMessages(const Thread::ThreadState &threadState);
+        void dispatchMessages(const ThreadBase::ThreadState &threadState);
 
         Module(const Module &) = delete;
         Module &operator=(const Module &) = delete;

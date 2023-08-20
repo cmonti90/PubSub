@@ -11,7 +11,8 @@ set(SOURCES Component.cpp
             QueueMngr.cpp
             Thread.cpp
             SimThread.cpp
-            Time.cpp)
+            Time.cpp
+            ThreadBase.cpp)
 
 set(HEADERS QueueMngr.h
             Component.h
@@ -21,6 +22,9 @@ set(HEADERS QueueMngr.h
             Thread.h
             SimThread.h
             Module.h
+            ThreadBase.h
+            MessageContainer.h
+            Payload.h
 )
 
 add_link_options(-lpthread)

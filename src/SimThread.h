@@ -1,15 +1,14 @@
 #ifndef D71B08DE_3F7C_44EE_A271_1802F0E690B3
 #define D71B08DE_3F7C_44EE_A271_1802F0E690B3
 
+#include "ThreadBase.h"
 #include "SimComponent.h"
-#include "Thread.h"
 #include <vector>
-#include <thread>
 
 namespace PubSub
 {
     typedef std::vector<SimComponent *> SimComponentList;
-    class SimThread : public Thread
+    class SimThread : public ThreadBase
     {
     public:
 
@@ -19,16 +18,18 @@ namespace PubSub
 
         SimThread &operator=(SimThread &&obj);
 
-        void run(const ThreadState &state, unsigned int counter);
+        virtual void run(const ThreadState &state, unsigned int counter);
 
         void addComp(SimComponent *comp);
 
-        unsigned int getProcessCount() const { return m_simProcs.size(); }
+        virtual unsigned int getProcessCount() const override { return m_simProcs.size(); }
         
         virtual void passSubscriptionLists() override;
 
-    private:
+    protected:
         SimComponentList m_simProcs;
+
+    private:
 
         SimThread(const SimThread &) = delete;
         SimThread &operator=(const SimThread &) = delete;

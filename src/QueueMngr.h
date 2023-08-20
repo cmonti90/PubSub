@@ -13,7 +13,7 @@
 namespace PubSub
 {
     typedef std::vector<Component *> ComponentList;
-    typedef std::unordered_map<Message_Label, ComponentList> SubcriberList;
+    typedef std::unordered_map<Message_Label_Name, ComponentList> SubcriberList;
 
     class QueueMngr
     {
@@ -21,7 +21,7 @@ namespace PubSub
         QueueMngr() = default;
         ~QueueMngr() = default;
 
-        void push(Message *value);
+        void push(const Message *value);
         Message *popFront();
         void dispatch();
 

@@ -4,7 +4,7 @@
 namespace PubSub
 {
 
-    Thread::Thread() : procIdx(0u), m_procs(), thread()
+    Thread::Thread() : ThreadBase(), m_procs()
     {
     }
 
@@ -12,7 +12,7 @@ namespace PubSub
     {
     }
 
-    Thread::Thread(Thread &&obj) : procIdx(obj.procIdx), m_procs(std::move(obj.m_procs)), thread(std::move(obj.thread))
+    Thread::Thread(Thread &&obj) : ThreadBase(std::move(obj)), m_procs(std::move(obj.m_procs))
     {
     }
 
@@ -34,6 +34,12 @@ namespace PubSub
     {
         if (procIdx < m_procs.size())
         {
+
+            // while (NUM_THREADS_ACTIVE >= MAX_THREAD_COUNT)
+            // {
+            //     join();
+            // }
+
             if (threadState == ThreadState::INITIALIZE)
             {
                 thread = std::thread(&Component::initialize, m_procs[procIdx]);
@@ -51,22 +57,8 @@ namespace PubSub
             }
 
             procIdx++;
-        }
-    }
 
-    void Thread::stop()
-    {
-        if (thread.joinable())
-        {
-            thread.join();
-        }
-    }
-
-    void Thread::join()
-    {
-        if (thread.joinable())
-        {
-            thread.join();
+            NUM_THREADS_ACTIVE++;
         }
     }
 
@@ -79,7 +71,10 @@ namespace PubSub
     {
         for (unsigned int i{0u}; i < m_procs.size(); i++)
         {
+
             thread = std::thread(&Component::giveSubscriptionListToQueueMngr, m_procs[i]);
+
+            NUM_THREADS_ACTIVE++;
 
             join();
         }

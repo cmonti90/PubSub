@@ -3,7 +3,7 @@
 namespace PubSub
 {
 
-    void QueueMngr::push(Message *value)
+    void QueueMngr::push(const Message *value)
     {
         std::unique_lock<std::mutex> lock(m_mutex);
 
@@ -30,9 +30,9 @@ namespace PubSub
         {
             Message *msg = popFront();
 
-            for (unsigned int i{0u}; i < m_subscriberList[msg->getMessageLabel()].size(); ++i)
+            for (unsigned int i{0u}; i < m_subscriberList[msg->getMessageLabelName()].size(); ++i)
             {
-                m_subscriberList[msg->getMessageLabel()][i]->writeToBuffer(msg->clone());
+                m_subscriberList[msg->getMessageLabelName()][i]->writeToBuffer(msg->clone());
             }
 
             delete msg;
