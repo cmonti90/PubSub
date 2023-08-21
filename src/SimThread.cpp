@@ -19,10 +19,7 @@ namespace PubSub
 
     SimThread& SimThread::operator=( SimThread&& obj )
     {
-        if (thread.joinable())
-        {
-            thread.join();
-        }
+        stop();
 
         procIdx = obj.procIdx;
         m_simProcs = std::move( obj.m_simProcs );

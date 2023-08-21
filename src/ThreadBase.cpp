@@ -39,9 +39,9 @@ namespace PubSub
         if (thread.joinable())
         {
             thread.join();
-
-            NUM_THREADS_ACTIVE--;
         }
+
+        NUM_THREADS_ACTIVE--;
     }
 
 } // namespace PubSub
