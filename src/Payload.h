@@ -1,6 +1,8 @@
 #ifndef C3D6F63C_4E40_4AAE_8296_E5302C3C9AEC
 #define C3D6F63C_4E40_4AAE_8296_E5302C3C9AEC
 
+#include "Message.h"
+
 template <typename T>
 struct PayloadBase
 {
@@ -57,8 +59,8 @@ public:
 };
 
 template <typename T>
-struct InputPayload : PayloadBase<T>,
-    PayloadBase<T>::type
+struct InputPayload : public PayloadBase<T>,
+    public PayloadBase<T>::type
 {
     using type = typename PayloadBase<T>::type;
 
@@ -73,8 +75,8 @@ struct InputPayload : PayloadBase<T>,
 };
 
 template <typename T>
-struct OutputPayload :  PayloadBase<T>,
-    PayloadBase<T>::type
+struct OutputPayload :  public PayloadBase<T>,
+    public PayloadBase<T>::type
 {
     using type = typename PayloadBase<T>::type;
 

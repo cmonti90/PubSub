@@ -4,7 +4,7 @@
 namespace Intf
 {
     template<typename ...Args>
-    class MessageContainer : public Args...
+    struct MessageContainer : public Args...
     {
         void reset()
         {

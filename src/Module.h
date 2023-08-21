@@ -42,7 +42,7 @@ namespace PubSub
 
         std::shared_ptr<QueueMngr> m_queueMngr;
 
-        Time m_time;
+        std::shared_ptr<Time> m_time;
 
     private:
         void runSW(const ThreadBase::ThreadState &threadState);

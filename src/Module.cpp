@@ -1,9 +1,10 @@
 
 #include "Module.h"
+
 namespace PubSub
 {
 
-    Module::Module() : m_threadCount(0u), maxProcCount(0u), m_queueMngr(new QueueMngr()), m_time()
+    Module::Module() : m_threadCount(0u), maxProcCount(0u), m_queueMngr(new QueueMngr()), m_time( new Time() )
     {
     }
 
@@ -81,7 +82,7 @@ namespace PubSub
     {
         runSW(threadState);
 
-        m_time.incrementTime();
+        m_time->incrementTime();
 
         runSim(threadState);
     }
@@ -114,7 +115,7 @@ namespace PubSub
     {
         for (unsigned int procIdx{0u}; procIdx < m_simThread.getProcessCount(); procIdx++)
         {
-            m_simThread.run(threadState, m_time.getCounter());
+            m_simThread.run(threadState, m_time->getCounter());
 
             dispatchMessages(threadState);
         }

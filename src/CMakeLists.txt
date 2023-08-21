@@ -25,6 +25,7 @@ set(HEADERS QueueMngr.h
             ThreadBase.h
             MessageContainer.h
             Payload.h
+            MessagePayloadTemplate.hxx
 )
 
 add_link_options(-lpthread)
