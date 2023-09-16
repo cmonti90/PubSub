@@ -11,7 +11,7 @@ namespace PubSub
         friend class QueueMngr;
 
         SimComponent() = delete;
-        SimComponent(std::shared_ptr<QueueMngr>& queue_mngr, unsigned int rate, const COMPONENT_LABEL str)
+        SimComponent(std::shared_ptr<QueueMngr>& queue_mngr, unsigned int rate, const Component_Label str)
         : Component(queue_mngr, str), model_rate(rate)
         {
         }

@@ -6,31 +6,19 @@ set(version 1.0.0)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(SOURCES Component.cpp
-            Module.cpp
-            QueueMngr.cpp
-            Thread.cpp
-            SimThread.cpp
-            Time.cpp
-            ThreadBase.cpp)
+file(GLOB_RECURSE SOURCES_C RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cc)
+file(GLOB_RECURSE SOURCES_CPP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cpp)
+file(GLOB_RECURSE SOURCES_CXX RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cxx)
+file(GLOB_RECURSE HEADERS_H RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.h)
+file(GLOB_RECURSE HEADERS_HPP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.hpp)
+file(GLOB_RECURSE HEADERS_HXX RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.hxx)
 
-set(HEADERS QueueMngr.h
-            Component.h
-            SimComponent.h
-            "Message.h"
-            Time.h
-            Thread.h
-            SimThread.h
-            Module.h
-            ThreadBase.h
-            MessageContainer.h
-            Payload.h
-            MessagePayloadTemplate.hxx
-)
+list(APPEND SOURCES ${SOURCES_C} ${SOURCES_CPP} ${SOURCES_CXX})
+list(APPEND HEADERS ${HEADERS_H} ${HEADERS_HPP} ${HEADERS_HXX})
 
 add_link_options(-lpthread)
 
-add_library(${target} SHARED ${SOURCES})
+add_library(${target} SHARED ${SOURCES} ${SOURCES})
 
 set_property(TARGET ${target} PROPERTY VERSION ${version})
 set_property(TARGET ${target} PROPERTY SOVERSION 1)
@@ -40,15 +28,39 @@ set_property(TARGET ${target} APPEND PROPERTY
   COMPATIBLE_INTERFACE_STRING PubSub_MAJOR_VERSION
 )
 
-target_include_directories(${target} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-                                            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+macro(includeSubDirs targ curdir instdir sourceDirs installDirs)
+  target_include_directories(${targ} PUBLIC "$<BUILD_INTERFACE:${curdir}>"
+                                            "$<INSTALL_INTERFACE:${instDir}>")
+
+  list(APPEND ${sourceDirs} ${curdir})
+  list(APPEND ${installDirs} ${instdir})
+
+  file(GLOB children RELATIVE ${curdir} ${curdir}/*)
+
+  foreach(child ${children})
+    if(IS_DIRECTORY ${curdir}/${child})
+      includeSubDirs(${targ} ${curdir}/${child} ${instdir}/${child} ${sourceDirs} ${installDirs})
+    endif()
+  endforeach()
+endmacro()
+
+includeSubDirs(${target} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_INSTALL_INCLUDEDIR} source_dirs install_dirs)
 
 install(TARGETS ${target}
         EXPORT ${exportedTarget}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        INCLUDES DESTINATION ${install_dirs}
 )
 
-install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+macro(installIncludeFiles headerFile)
+  get_filename_component(thisSubDir ${headerFile} DIRECTORY)
+  get_filename_component(thisFile ${headerFile} NAME)
+
+  install(FILES ${headerFile} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${thisSubDir})
+endmacro()
+
+foreach(headerFile ${HEADERS})
+  installIncludeFiles(${headerFile})
+endforeach()
 
 install(EXPORT ${exportedTarget}
         FILE "${exportedTarget}.cmake"

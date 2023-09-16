@@ -6,6 +6,11 @@ namespace Intf
     template<typename ...Args>
     struct MessageContainer : public Args...
     {
+        void initialize()
+        {
+            (Args::initialize(), ...);
+        }
+
         void reset()
         {
             (Args::reset(), ...);

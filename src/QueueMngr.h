@@ -13,7 +13,7 @@
 namespace PubSub
 {
     typedef std::vector<Component *> ComponentList;
-    typedef std::unordered_map<Message_Label_Name, ComponentList> SubcriberList;
+    typedef std::unordered_map<Message_Name, ComponentList> SubcriberList;
 
     class QueueMngr
     {

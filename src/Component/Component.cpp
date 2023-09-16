@@ -4,22 +4,22 @@
 
 namespace PubSub
 {
-    Component::Component( std::shared_ptr<QueueMngr>& queue_mngr, const COMPONENT_LABEL str )
-        : Component_Label( str ),
+    Component::Component( std::shared_ptr<QueueMngr>& queue_mngr, const Component_Label str )
+        : label( str ),
         m_queue_mngr( queue_mngr )
     {
     }
 
-    COMPONENT_LABEL Component::getComponentLabel() const
+    Component_Label Component::getComponentLabel() const
     {
-        return Component_Label;
+        return label;
     }
 
     void Component::subscribe( const Message* msg, Message_Type msg_type )
     {
         std::unique_lock<std::mutex> lock( m_mutex );
 
-        m_subscribed_msg.insert( std::make_pair( msg->getMessageLabelName(), msg_type ) );
+        m_subscribed_msg.insert( std::make_pair( msg->getMessageName(), msg_type ) );
 
         lock.unlock();
         m_condition.notify_one();
@@ -63,35 +63,35 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock( m_mutex );
 
-        switch (m_subscribed_msg.find( msg->getMessageLabelName() )->second)
+        switch (m_subscribed_msg.find( msg->getMessageName() )->second)
         {
         case ACTIVE:
         {
-            if (m_active_msg_buffer.count( msg->getMessageLabelName() ))
+            if (m_active_msg_buffer.count( msg->getMessageName() ))
             {
-                msg->copy( m_active_msg_buffer[msg->getMessageLabelName()].get() );
+                msg->copy( m_active_msg_buffer[msg->getMessageName()].get() );
             }
             else
             {
-                m_active_msg_buffer.insert( std::make_pair( msg->getMessageLabelName(), std::unique_ptr<Message>( msg->clone() ) ) );
+                m_active_msg_buffer.insert( std::make_pair( msg->getMessageName(), std::unique_ptr<Message>( msg->clone() ) ) );
             }
 
-            m_active_msg_buffer.erase( msg->getMessageLabelName() );
+            m_active_msg_buffer.erase( msg->getMessageName() );
         }
         break;
 
         case PASSIVE:
         {
-            if (m_passive_msg_buffer.count( msg->getMessageLabelName() ))
+            if (m_passive_msg_buffer.count( msg->getMessageName() ))
             {
-                msg->copy( m_passive_msg_buffer[msg->getMessageLabelName()].get() );
+                msg->copy( m_passive_msg_buffer[msg->getMessageName()].get() );
             }
             else
             {
-                m_passive_msg_buffer.insert( std::make_pair( msg->getMessageLabelName(), std::unique_ptr<Message>( msg->clone() ) ) );
+                m_passive_msg_buffer.insert( std::make_pair( msg->getMessageName(), std::unique_ptr<Message>( msg->clone() ) ) );
             }
 
-            m_passive_msg_buffer.erase( msg->getMessageLabelName() );
+            m_passive_msg_buffer.erase( msg->getMessageName() );
         }
         break;
         }
@@ -102,7 +102,7 @@ namespace PubSub
 
     void Component::writeToBuffer( Message* msg )
     {
-        switch (m_subscribed_msg.find( msg->getMessageLabelName() )->second)
+        switch (m_subscribed_msg.find( msg->getMessageName() )->second)
         {
 
         case ACTIVE:
@@ -128,13 +128,13 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock( m_mutex );
 
-        if (buffer.count( msg->getMessageLabelName() ))
+        if (buffer.count( msg->getMessageName() ))
         {
-            buffer[msg->getMessageLabelName()]->copy( msg );
+            buffer[msg->getMessageName()]->copy( msg );
         }
         else
         {
-            buffer.insert( std::make_pair( msg->getMessageLabelName(), std::unique_ptr<Message>( msg->clone() ) ) );
+            buffer.insert( std::make_pair( msg->getMessageName(), std::unique_ptr<Message>( msg->clone() ) ) );
         }
 
         lock.unlock();

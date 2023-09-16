@@ -27,9 +27,9 @@ namespace PubSub
         MESSAGE_AVAILABLE = 1
     };
 
-    typedef std::string COMPONENT_LABEL;
-    typedef std::unordered_map<Message_Label_Name, Message_Type> MessageSubscription;
-    typedef std::unordered_map<Message_Label_Name, std::unique_ptr<Message>> MessageBuffer;
+    typedef std::string Component_Label;
+    typedef std::unordered_map<Message_Name, Message_Type> MessageSubscription;
+    typedef std::unordered_map<Message_Name, std::unique_ptr<Message>> MessageBuffer;
 
     class QueueMngr;
     class Component
@@ -38,14 +38,14 @@ namespace PubSub
         friend class QueueMngr;
 
         Component() = delete;
-        Component( std::shared_ptr<QueueMngr>& queue_mngr, const COMPONENT_LABEL str );
+        Component( std::shared_ptr<QueueMngr>& queue_mngr, const Component_Label str );
         virtual ~Component() = default;
 
         virtual void initialize() = 0;
         virtual void update() = 0;
         virtual void finalize() = 0;
 
-        COMPONENT_LABEL getComponentLabel() const;
+        Component_Label getComponentLabel() const;
 
         void subscribe( const Message* msg, Message_Type msg_type = ACTIVE );
 
@@ -83,7 +83,7 @@ namespace PubSub
         void giveSubscriptionListToQueueMngr();
 
     private:
-        const COMPONENT_LABEL Component_Label;
+        const Component_Label label;
 
         MessageBuffer m_active_msg_buffer;
         MessageBuffer m_passive_msg_buffer;

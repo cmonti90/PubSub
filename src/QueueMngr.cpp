@@ -30,9 +30,9 @@ namespace PubSub
         {
             Message *msg = popFront();
 
-            for (unsigned int i{0u}; i < m_subscriberList[msg->getMessageLabelName()].size(); ++i)
+            for (unsigned int i{0u}; i < m_subscriberList[msg->getMessageName()].size(); ++i)
             {
-                m_subscriberList[msg->getMessageLabelName()][i]->writeToBuffer(msg->clone());
+                m_subscriberList[msg->getMessageName()][i]->writeToBuffer(msg->clone());
             }
 
             delete msg;
