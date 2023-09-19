@@ -69,21 +69,10 @@ public:
 
 };
 
-struct Terminator
-{
-    static constexpr decPriorityType DECORATOR_PRIORITY = 999999u;
-};
-
-template <typename Message, typename ...Decorators>
-struct InheritencePayload : public PayloadBase<Message>, public PayloadBase<Message>::PayloadType, public Decorators...
+template <typename Message>
+struct InputPayloadBase : public PayloadBase<Message>, public PayloadBase<Message>::PayloadType
 {
     using PayloadType = typename PayloadBase<Message>::PayloadType;
-};
-
-template <typename Message, typename ...Decorators>
-struct InputPayload : public InheritencePayload<Message, Decorators...>
-{
-    using PayloadType = typename InheritencePayload<Message, Decorators...>::PayloadType;
 
     virtual void updateExternalPayload()
     {
@@ -91,10 +80,10 @@ struct InputPayload : public InheritencePayload<Message, Decorators...>
     }
 };
 
-template <typename Message, typename ...Decorators>
-struct OutputPayload :  public InheritencePayload<Message, Decorators...>
+template <typename Message>
+struct OutputPayloadBase :  public PayloadBase<Message>, public PayloadBase<Message>::PayloadType
 {
-    using PayloadType = typename InheritencePayload<Message, Decorators...>::PayloadType;
+    using PayloadType = typename PayloadBase<Message>::PayloadType;
 
     virtual void updateExternalPayload()
     {
@@ -105,7 +94,56 @@ struct OutputPayload :  public InheritencePayload<Message, Decorators...>
     {
         PayloadBase<Message>::overwriteInternalPayload( static_cast< PayloadType& >( *this ) );
     }
+};
 
+template <typename Base>
+struct Terminator : public Base
+{
+    static constexpr decPriorityType DECORATOR_PRIORITY = 999999u;
+};
+
+template <typename Base, template <typename> typename Decorator>
+struct IsValidDecorator
+{
+    static_assert( Base::DECORATOR_PRIORITY < Decorator<Base>::DECORATOR_PRIORITY, "Decorators must be in ascending priority!" );
+
+    using type = Decorator<Base>;
+};
+
+// D3<D2<D1<Base>>>
+template <typename Base, template <typename> typename Decorator = Terminator, template <typename> typename ...More>
+struct InheritencePayload
+{
+    using type = typename InheritencePayload< typename IsValidDecorator<Base, Decorator>::type, More...>::type;
+};
+
+template <typename Base>
+struct InheritencePayload<Base, Terminator>
+{
+    using type = Base;
+};
+
+template <typename Message, template <typename> typename ...Decorators>
+struct InputPayload : public InheritencePayload<InputPayloadBase<Message>, Decorators...>::type
+{
+    virtual void updateExternalPayload()
+    {
+        InheritencePayload<InputPayloadBase<Message>, Decorators...>::type::updateExternalPayload();
+    }
+};
+
+template <typename Message, template <typename> typename ...Decorators>
+struct OutputPayload :  public InheritencePayload<OutputPayloadBase<Message>, Decorators...>::type
+{
+    virtual void updateExternalPayload()
+    {
+        InheritencePayload<OutputPayloadBase<Message>, Decorators...>::type::updateExternalPayload();
+    }
+
+    virtual void updateInternalPayload()
+    {
+        InheritencePayload<OutputPayloadBase<Message>, Decorators...>::type::updateInternalPayload();
+    }
 };
 
 

@@ -28,11 +28,10 @@ set_property(TARGET ${target} APPEND PROPERTY
   COMPATIBLE_INTERFACE_STRING PubSub_MAJOR_VERSION
 )
 
-macro(includeSubDirs targ curdir instdir sourceDirs installDirs)
+macro(includeSubDirs targ curdir instdir installDirs)
   target_include_directories(${targ} PUBLIC "$<BUILD_INTERFACE:${curdir}>"
                                             "$<INSTALL_INTERFACE:${instDir}>")
 
-  list(APPEND ${sourceDirs} ${curdir})
   list(APPEND ${installDirs} ${instdir})
 
   file(GLOB children RELATIVE ${curdir} ${curdir}/*)
@@ -44,7 +43,7 @@ macro(includeSubDirs targ curdir instdir sourceDirs installDirs)
   endforeach()
 endmacro()
 
-includeSubDirs(${target} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_INSTALL_INCLUDEDIR} source_dirs install_dirs)
+includeSubDirs(${target} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_INSTALL_INCLUDEDIR} install_dirs)
 
 install(TARGETS ${target}
         EXPORT ${exportedTarget}
@@ -53,7 +52,6 @@ install(TARGETS ${target}
 
 macro(installIncludeFiles headerFile)
   get_filename_component(thisSubDir ${headerFile} DIRECTORY)
-  get_filename_component(thisFile ${headerFile} NAME)
 
   install(FILES ${headerFile} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${thisSubDir})
 endmacro()

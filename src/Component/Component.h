@@ -52,7 +52,7 @@ namespace PubSub
         template <typename Msg, typename Container>
         void subscribe( const Container& data, Message_Type msg_type = ACTIVE )
         {
-            subscribe( static_cast< const InputPayload<Msg>&>( data ).getInternalMsg(), msg_type );
+            subscribe( static_cast< const InputPayloadBase<Msg>&>( data ).getInternalMsg(), msg_type );
         }
 
         MessageStatus peek( Message_Label& msg_label );
@@ -62,8 +62,8 @@ namespace PubSub
         template <typename Msg, typename Container>
         void send( Container& data )
         {
-            static_cast< OutputPayload<Msg>&>( data ).updateInternalPayload();
-            send( static_cast< OutputPayload<Msg>&>( data ).getInternalMsg() );
+            static_cast< OutputPayloadBase<Msg>&>( data ).updateInternalPayload();
+            send( static_cast< OutputPayloadBase<Msg>&>( data ).getInternalMsg() );
         }
 
         void receive( Message* msg );
@@ -72,7 +72,7 @@ namespace PubSub
         void receive( Container& data )
         {
             receive( static_cast< InputPayload<Msg>&>( data ).getInternalMsg() );
-            static_cast< InputPayload<Msg>&>( data ).updateExternalPayload();
+            static_cast< InputPayloadBase<Msg>&>( data ).updateExternalPayload();
         }
 
         void removeTopMessage();
