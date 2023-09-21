@@ -8,7 +8,6 @@ typedef unsigned int decPriorityType;
 template <typename Message>
 struct PayloadBase
 {
-
 private:
     Message message_;
 
@@ -48,19 +47,22 @@ public:
         updateExternalPayload();
     }
 
-    PubSub::Message* getInternalMsg()
+    PubSub::Message& getInternalMsg()
     {
-        return &message_;
+        return message_;
     }
 
-    const PubSub::Message* getInternalMsg() const
+    const PubSub::Message& getInternalMsg() const
     {
-        return &message_;
+        return message_;
     }
 
-// protected:
+    PayloadType& getInternalPayload()
+    {
+        return message_.payload;
+    }
 
-    PayloadType getInternalPayload() const
+    const PayloadType& getInternalPayload() const
     {
         return message_.payload;
     }
@@ -76,7 +78,7 @@ struct InputPayloadBase : public PayloadBase<Message>, public PayloadBase<Messag
 
     virtual void updateExternalPayload()
     {
-        static_cast< PayloadType& >( *this ) = PayloadBase<Message>::getInternalPayload();
+        static_cast< PayloadType& >( *this ) = this->getInternalPayload();
     }
 };
 
@@ -87,12 +89,12 @@ struct OutputPayloadBase :  public PayloadBase<Message>, public PayloadBase<Mess
 
     virtual void updateExternalPayload()
     {
-        static_cast< PayloadType& >( *this ) = PayloadBase<Message>::getInternalPayload();
+        static_cast< PayloadType& >( *this ) = this->getInternalPayload();
     }
 
     virtual void updateInternalPayload()
     {
-        PayloadBase<Message>::overwriteInternalPayload( static_cast< PayloadType& >( *this ) );
+        this->overwriteInternalPayload( static_cast< PayloadType& >( *this ) );
     }
 };
 
@@ -126,24 +128,11 @@ struct InheritencePayload<Base, Terminator>
 template <typename Message, template <typename> typename ...Decorators>
 struct InputPayload : public InheritencePayload<InputPayloadBase<Message>, Decorators...>::type
 {
-    virtual void updateExternalPayload()
-    {
-        InheritencePayload<InputPayloadBase<Message>, Decorators...>::type::updateExternalPayload();
-    }
 };
 
 template <typename Message, template <typename> typename ...Decorators>
 struct OutputPayload :  public InheritencePayload<OutputPayloadBase<Message>, Decorators...>::type
 {
-    virtual void updateExternalPayload()
-    {
-        InheritencePayload<OutputPayloadBase<Message>, Decorators...>::type::updateExternalPayload();
-    }
-
-    virtual void updateInternalPayload()
-    {
-        InheritencePayload<OutputPayloadBase<Message>, Decorators...>::type::updateInternalPayload();
-    }
 };
 
 
