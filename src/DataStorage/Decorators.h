@@ -32,6 +32,12 @@ struct Serialize : public InputBase,
 {
     static constexpr decPriorityType DECORATOR_PRIORITY = 1u;
 
+    virtual void initialize() override
+    {
+        InputBase::initialize();
+        PayloadSerializer<typename InputBase::PayloadType>::initialize();
+    }
+
     virtual void reset() override
     {
         InputBase::reset();
@@ -40,14 +46,8 @@ struct Serialize : public InputBase,
 
     virtual void updateInternalPayload() override
     {
-        this->serialize(this->getInternalPayload());
+        this->serialize(*this);
         InputBase::updateInternalPayload();
-    }
-
-    virtual void updateExternalPayload()
-    {
-        InputBase::updateExternalPayload();
-        this->deserialize(this->getInternalPayload());
     }
 };
 
@@ -56,6 +56,12 @@ struct Deserialize : public InputBase,
                      public virtual PayloadDeserializer<typename InputBase::PayloadType>
 {
     static constexpr decPriorityType DECORATOR_PRIORITY = 1u;
+
+    virtual void initialize() override
+    {
+        InputBase::initialize();
+        PayloadDeserializer<typename InputBase::PayloadType>::initialize();
+    }
 
     virtual void reset() override
     {
@@ -66,7 +72,7 @@ struct Deserialize : public InputBase,
     virtual void updateExternalPayload()
     {
         InputBase::updateExternalPayload();
-        this->deserialize(this->getInternalPayload());
+        this->deserialize(*this);
     }
 };
 

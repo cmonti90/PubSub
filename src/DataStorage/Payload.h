@@ -35,7 +35,7 @@ public:
         updateExternalPayload();
     }
 
-    void initialize()
+    virtual void initialize()
     {
         message_ = Message();
         updateExternalPayload();
