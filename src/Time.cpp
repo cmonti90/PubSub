@@ -19,13 +19,19 @@ namespace PubSub
 
         counter++;
 
+        lck.unlock();
         cv.notify_one();
     }
 
     void Time::reset()
     {
+        std::unique_lock<std::mutex> lck(mtx);
+
         timeNow = 0.0;
         counter = 0u;
+
+        lck.unlock();
+        cv.notify_one();
     }
 
     void Time::finalize()
@@ -34,27 +40,16 @@ namespace PubSub
 
     double Time::getTimeNow() const
     {
-        std::unique_lock<std::mutex> lck(mtx);
+        std::lock_guard<std::mutex> lck(mtx);
 
-        double timeNowTmp = timeNow;
-
-        lck.unlock();
-        cv.notify_one();
-
-        return timeNowTmp;
+        return timeNow;
     }
 
     unsigned int Time::getCounter() const
     {
-        std::unique_lock<std::mutex> lck(mtx);
+        std::lock_guard<std::mutex> lck(mtx);
 
-
-        double counterTmp = counter;
-
-        lck.unlock();
-        cv.notify_one();
-
-        return counterTmp;
+        return counter;
     }
 
 } // namespace PubSub
