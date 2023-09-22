@@ -15,7 +15,6 @@ namespace PubSub
 
     Message *QueueMngr::popFront()
     {
-
         Message *value = m_queue.front();
         m_queue.pop();
 

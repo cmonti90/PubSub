@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <map>
 #include <mutex>
 #include <condition_variable>
 #include <memory>
@@ -29,7 +30,7 @@ namespace PubSub
 
     typedef std::string Component_Label;
     typedef std::unordered_map<Message_Name, Message_Type> MessageSubscription;
-    typedef std::unordered_map<Message_Name, std::unique_ptr<Message>> MessageBuffer;
+    typedef std::multimap<Message_Name, std::unique_ptr<Message>> MessageBuffer;
 
     class QueueMngr;
     class Component
@@ -78,7 +79,7 @@ namespace PubSub
         void removeTopMessage();
         void clear();
 
-        bool hasActiveMessage() const;
+        bool hasActiveMessage();
 
         void giveSubscriptionListToQueueMngr();
 
