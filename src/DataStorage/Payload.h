@@ -5,6 +5,10 @@
 
 typedef unsigned int decPriorityType;
 
+struct tag {};
+struct InputTag : public tag {};
+struct OutputTag : public tag {};
+
 template <typename Message>
 struct PayloadBase
 {
@@ -75,6 +79,7 @@ template <typename Message>
 struct InputPayloadBase : public PayloadBase<Message>, public PayloadBase<Message>::PayloadType
 {
     using PayloadType = typename PayloadBase<Message>::PayloadType;
+    using tagType = InputTag;
 
     virtual void updateExternalPayload()
     {
@@ -86,6 +91,7 @@ template <typename Message>
 struct OutputPayloadBase :  public PayloadBase<Message>, public PayloadBase<Message>::PayloadType
 {
     using PayloadType = typename PayloadBase<Message>::PayloadType;
+    using tagType = OutputTag;
 
     virtual void updateExternalPayload()
     {

@@ -4,7 +4,7 @@
 namespace PubSub
 {
 
-    ThreadBase::ThreadBase() : procIdx(0u), thread()
+    ThreadBase::ThreadBase() : procIdx( 0u ), thread()
     {
     }
 
@@ -12,19 +12,19 @@ namespace PubSub
     {
     }
 
-    ThreadBase::ThreadBase(ThreadBase &&obj) : procIdx(obj.procIdx), thread(std::move(obj.thread))
+    ThreadBase::ThreadBase( ThreadBase&& obj ) : procIdx( obj.procIdx ), thread( std::move( obj.thread ) )
     {
     }
 
-    ThreadBase &ThreadBase::operator=(ThreadBase &&obj)
+    ThreadBase& ThreadBase::operator=( ThreadBase&& obj )
     {
-        if (thread.joinable())
+        if ( thread.joinable() )
         {
             thread.join();
         }
 
         procIdx = obj.procIdx;
-        thread = std::move(obj.thread);
+        thread = std::move( obj.thread );
 
         return *this;
     }
@@ -36,7 +36,7 @@ namespace PubSub
 
     void ThreadBase::join()
     {
-        if (thread.joinable())
+        if ( thread.joinable() )
         {
             thread.join();
         }

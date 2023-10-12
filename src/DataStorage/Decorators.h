@@ -17,45 +17,51 @@ struct Persistent : public Payload
 template <typename Serializer>
 struct PayloadSerializer
 {
-    static_assert( sizeof(Serializer) == 0, "Serializer must implement serialization method" );
+    static_assert( sizeof( Serializer ) == 0, "Serializer must implement serialization method" );
 };
 
 template <typename Deserializer>
 struct PayloadDeserializer
 {
-    static_assert( sizeof(Deserializer) == 0, "Deserializer must implement deserialization method" );
+    static_assert( sizeof( Deserializer ) == 0, "Deserializer must implement deserialization method" );
 };
 
-template <typename InputBase>
-struct Serialize : public InputBase,
-                   public virtual PayloadSerializer<typename InputBase::PayloadType>
+template <typename OutputBase>
+struct Serialize :
+    public OutputBase,
+    public virtual PayloadSerializer<typename OutputBase::PayloadType>
 {
     static constexpr decPriorityType DECORATOR_PRIORITY = 1u;
 
+    static_assert( std::is_same<typename OutputBase::tagType, OutputTag>::value, "Serialize decorator must be used with output type, i.e. OutputPayload" );
+
     virtual void initialize() override
     {
-        InputBase::initialize();
-        PayloadSerializer<typename InputBase::PayloadType>::initialize();
+        OutputBase::initialize();
+        PayloadSerializer<typename OutputBase::PayloadType>::initialize();
     }
 
     virtual void reset() override
     {
-        InputBase::reset();
-        PayloadSerializer<typename InputBase::PayloadType>::reset();
+        OutputBase::reset();
+        PayloadSerializer<typename OutputBase::PayloadType>::reset();
     }
 
     virtual void updateInternalPayload() override
     {
-        this->serialize(*this);
-        InputBase::updateInternalPayload();
+        this->serialize( *this );
+        OutputBase::updateInternalPayload();
     }
 };
 
 template <typename InputBase>
-struct Deserialize : public InputBase,
-                     public virtual PayloadDeserializer<typename InputBase::PayloadType>
+struct Deserialize :
+    public InputBase,
+    public virtual PayloadDeserializer<typename InputBase::PayloadType>
 {
     static constexpr decPriorityType DECORATOR_PRIORITY = 1u;
+
+    static_assert( std::is_same<typename InputBase::tagType, InputTag>::value, "Deserialize decorator must be used with input type, i.e. InputPayload" );
 
     virtual void initialize() override
     {
@@ -72,7 +78,7 @@ struct Deserialize : public InputBase,
     virtual void updateExternalPayload()
     {
         InputBase::updateExternalPayload();
-        this->deserialize(*this);
+        this->deserialize( *this );
     }
 };
 

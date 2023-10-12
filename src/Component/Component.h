@@ -56,12 +56,12 @@ namespace PubSub
             subscribe( &static_cast< const InputPayloadBase<Msg>&>( data ).getInternalMsg(), msg_type );
         }
 
-        MessageStatus peek( Message_Label& msg_label );
+        MessageStatus peek( Message_Label& msg_label ) const;
 
-        void send( const Message* msg );
+        void send( const Message* msg ) const;
 
         template <typename Msg, typename Container>
-        void send( Container& data )
+        void send( Container& data ) const
         {
             static_cast< OutputPayloadBase<Msg>&>( data ).updateInternalPayload();
             send( &static_cast< OutputPayloadBase<Msg>&>( data ).getInternalMsg() );
@@ -79,7 +79,7 @@ namespace PubSub
         void removeTopMessage();
         void clear();
 
-        bool hasActiveMessage();
+        bool hasActiveMessage() const;
 
         void giveSubscriptionListToQueueMngr();
 
@@ -93,8 +93,8 @@ namespace PubSub
 
         std::shared_ptr<QueueMngr> m_queue_mngr;
 
-        std::mutex m_mutex;
-        std::condition_variable m_condition;
+        mutable std::mutex m_mutex;
+        mutable std::condition_variable m_condition;
 
         void writeToBuffer( Message* msg );
         void writeToBuffer( Message* msg, MessageBuffer& buffer );

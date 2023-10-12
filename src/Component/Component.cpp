@@ -25,7 +25,7 @@ namespace PubSub
         m_condition.notify_one();
     }
 
-    MessageStatus Component::peek(Message_Label &msg_label)
+    MessageStatus Component::peek(Message_Label &msg_label) const
     {
         std::unique_lock<std::mutex> lock(m_mutex);
         MessageStatus status{FAIL};
@@ -54,7 +54,7 @@ namespace PubSub
         return status;
     }
 
-    void Component::send(const Message *msg)
+    void Component::send(const Message *msg) const
     {
         m_queue_mngr->push(msg);
     }
@@ -150,10 +150,12 @@ namespace PubSub
 
     void Component::giveSubscriptionListToQueueMngr()
     {
+        std::lock_guard<std::mutex> lock(m_mutex);
+
         m_queue_mngr->getSubscriptionList(this, m_subscribed_msg);
     }
 
-    bool Component::hasActiveMessage()
+    bool Component::hasActiveMessage() const
     {
         std::lock_guard<std::mutex> lock(m_mutex);
 
