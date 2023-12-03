@@ -16,23 +16,23 @@ namespace PubSub
     typedef std::vector<Thread> ThreadList;
     class Module
     {
-    public:
+      public:
         Module();
-        ~Module() = default;
+        virtual ~Module() = default;
 
-        void addThread(Thread &thread);
-        void addCompToThread(Component *comp);
+        void addThread( Thread& thread );
+        void addCompToThread( Component* comp );
 
-        void addSimComp(SimComponent *comp);
+        void addSimComp( SimComponent* comp );
 
         void initialize();
         void start();
-        void stop(bool over_ride = false);
+        void stop( bool over_ride = false );
         void finalize();
 
-        void run(const ThreadBase::ThreadState &threadState);
+        void run( const ThreadBase::ThreadState& threadState );
 
-    protected:
+      protected:
         unsigned int m_threadCount{0u};
         unsigned int maxProcCount{0u};
 
@@ -44,14 +44,13 @@ namespace PubSub
 
         std::shared_ptr<Time> m_time;
 
-    private:
-        void runSW(const ThreadBase::ThreadState &threadState);
-        void runSim(const ThreadBase::ThreadState &threadState);
-        void passSubscriptionLists();
-        void dispatchMessages(const ThreadBase::ThreadState &threadState);
+      private:
+        void runSW( const ThreadBase::ThreadState& threadState );
+        void runSim( const ThreadBase::ThreadState& threadState );
+        void dispatchMessages( const ThreadBase::ThreadState& threadState );
 
-        Module(const Module &) = delete;
-        Module &operator=(const Module &) = delete;
+        Module( const Module& ) = delete;
+        Module& operator=( const Module& ) = delete;
     };
 } // namespace PubSub
 

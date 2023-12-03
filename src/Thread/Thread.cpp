@@ -12,27 +12,27 @@ namespace PubSub
     {
     }
 
-    Thread::Thread(Thread &&obj) : ThreadBase(std::move(obj)), m_procs(std::move(obj.m_procs))
+    Thread::Thread( Thread &&obj ) : ThreadBase( std::move( obj ) ), m_procs( std::move( obj.m_procs ) )
     {
     }
 
-    Thread &Thread::operator=(Thread &&obj)
+    Thread& Thread::operator=( Thread &&obj )
     {
-        if (thread.joinable())
+        if ( thread.joinable() )
         {
             thread.join();
         }
 
         procIdx = obj.procIdx;
-        m_procs = std::move(obj.m_procs);
-        thread = std::move(obj.thread);
+        m_procs = std::move( obj.m_procs );
+        thread = std::move( obj.thread );
 
         return *this;
     }
 
-    void Thread::run(const ThreadState &threadState)
+    void Thread::run( const ThreadState& threadState )
     {
-        if (procIdx < m_procs.size())
+        if ( procIdx < m_procs.size() )
         {
 
             // while (NUM_THREADS_ACTIVE >= MAX_THREAD_COUNT)
@@ -40,20 +40,20 @@ namespace PubSub
             //     join();
             // }
 
-            if (threadState == ThreadState::INITIALIZE)
+            if ( threadState == ThreadState::INITIALIZE )
             {
-                thread = std::thread(&Component::initialize, m_procs[procIdx]);
+                thread = std::thread( &Component::initialize, m_procs[procIdx] );
             }
-            else if (threadState == ThreadState::UPDATE)
+            else if ( threadState == ThreadState::UPDATE )
             {
-                if (m_procs[procIdx]->hasActiveMessage())
+                if ( m_procs[procIdx]->associateEvent() )
                 {
-                    thread = std::thread(&Component::update, m_procs[procIdx]);
+                    thread = std::thread( &Component::update, m_procs[procIdx] );
                 }
             }
-            else if (threadState == ThreadState::FINALIZE)
+            else if ( threadState == ThreadState::FINALIZE )
             {
-                thread = std::thread(&Component::finalize, m_procs[procIdx]);
+                thread = std::thread( &Component::finalize, m_procs[procIdx] );
             }
 
             procIdx++;
@@ -62,22 +62,9 @@ namespace PubSub
         }
     }
 
-    void Thread::addComp(Component *comp)
+    void Thread::addComp( Component* comp )
     {
-        m_procs.push_back(comp);
-    }
-
-    void Thread::passSubscriptionLists()
-    {
-        for (unsigned int i{0u}; i < m_procs.size(); i++)
-        {
-
-            thread = std::thread(&Component::giveSubscriptionListToQueueMngr, m_procs[i]);
-
-            NUM_THREADS_ACTIVE++;
-
-            join();
-        }
+        m_procs.push_back( comp );
     }
 
 } // namespace PubSub

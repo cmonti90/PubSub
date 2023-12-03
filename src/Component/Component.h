@@ -35,8 +35,7 @@ namespace PubSub
     class QueueMngr;
     class Component
     {
-    public:
-        friend class QueueMngr;
+      public:
 
         Component() = delete;
         Component( std::shared_ptr<QueueMngr>& queue_mngr, const Component_Label str );
@@ -48,56 +47,18 @@ namespace PubSub
 
         Component_Label getComponentLabel() const;
 
-        void subscribe( const Message* msg, Message_Type msg_type = ACTIVE );
+      protected:
+        friend class Endpoint;
+        friend class Thread;
 
-        template <typename Msg, typename Container>
-        void subscribe( const Container& data, Message_Type msg_type = ACTIVE )
-        {
-            subscribe( &static_cast< const InputPayloadBase<Msg>&>( data ).getInternalMsg(), msg_type );
-        }
+        virtual bool associateEvent() const;
 
-        MessageStatus peek( Message_Label& msg_label ) const;
+      private:
+        friend class QueueMngr;
 
-        void send( const Message* msg ) const;
-
-        template <typename Msg, typename Container>
-        void send( Container& data ) const
-        {
-            static_cast< OutputPayloadBase<Msg>&>( data ).updateInternalPayload();
-            send( &static_cast< OutputPayloadBase<Msg>&>( data ).getInternalMsg() );
-        }
-
-        void receive( Message* msg );
-
-        template <typename Msg, typename Container>
-        void receive( Container& data )
-        {
-            receive( &static_cast< PayloadBase<Msg>&>( data ).getInternalMsg() );
-            static_cast< InputPayloadBase<Msg>&>( data ).updateExternalPayload();
-        }
-
-        void removeTopMessage();
-        void clear();
-
-        bool hasActiveMessage() const;
-
-        void giveSubscriptionListToQueueMngr();
-
-    private:
         const Component_Label label;
 
-        MessageBuffer m_active_msg_buffer;
-        MessageBuffer m_passive_msg_buffer;
-
-        MessageSubscription m_subscribed_msg;
-
-        std::shared_ptr<QueueMngr> m_queue_mngr;
-
-        mutable std::mutex m_mutex;
-        mutable std::condition_variable m_condition;
-
-        void writeToBuffer( Message* msg );
-        void writeToBuffer( Message* msg, MessageBuffer& buffer );
+        std::shared_ptr< QueueMngr > m_queue_mngr;
 
         Component( const Component& ) = delete;
         Component& operator=( const Component& ) = delete;

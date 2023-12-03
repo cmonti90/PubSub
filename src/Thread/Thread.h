@@ -7,32 +7,36 @@
 
 namespace PubSub
 {
-    typedef std::vector<Component *> ComponentList;
+    typedef std::vector<Component*> ComponentList;
     class Thread : public ThreadBase
     {
-    public:
-    
+      public:
+
         Thread();
         virtual ~Thread();
-        Thread(Thread &&obj);
+        Thread( Thread &&obj );
 
-        Thread &operator=(Thread &&obj);
+        Thread& operator=( Thread &&obj );
 
-        virtual void run(const ThreadState &state);
+        virtual void run( const ThreadState& state );
 
-        void addComp(Component *comp);
+        void addComp( Component* comp );
 
-        virtual unsigned int getProcessCount() const { return m_procs.size(); }
-        void resetProcessCount() { procIdx = 0u; }
+        virtual unsigned int getProcessCount() const
+        {
+            return m_procs.size();
+        }
+        void resetProcessCount()
+        {
+            procIdx = 0u;
+        }
 
-        virtual void passSubscriptionLists() override;
-
-    protected:
+      protected:
         ComponentList m_procs;
 
-    private:
-        Thread(const Thread &) = delete;
-        Thread &operator=(const Thread &) = delete;
+      private:
+        Thread( const Thread& ) = delete;
+        Thread& operator=( const Thread& ) = delete;
     };
 
 } // namespace PubSub

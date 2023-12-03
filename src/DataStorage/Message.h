@@ -17,7 +17,8 @@ namespace PubSub
 
         Message& operator=(const Message &obj) = default;
 
-        Message_Name getMessageName() const { return m_label; };
+        Message_Name getMessageName() { return m_label; };
+        const Message_Name getMessageName() const { return m_label; };
 
         virtual Message_Label getMessageLabel() const = 0;
 

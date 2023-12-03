@@ -1,21 +1,54 @@
 
 #include "QueueMngr.h"
+#include "Endpoint.h"
 namespace PubSub
 {
-
-    void QueueMngr::push(const Message *value)
+    void QueueMngr::subscribe( Endpoint* endpoint, const Message_Name msgName )
     {
-        std::unique_lock<std::mutex> lock(m_mutex);
+        std::unique_lock<std::mutex> lock( m_mutex );
 
-        m_queue.push(value->clone());
+        if ( m_subscriberList.count( msgName ) )
+        {
+
+            m_subscriberList.find( msgName )->second.push_back( endpoint );
+        }
+        else
+        {
+            m_subscriberList.insert( std::make_pair( msgName, std::list<Endpoint*>{endpoint} ) );
+        }
+
+        m_subscriberList[msgName].unique();
 
         lock.unlock();
         m_condition.notify_one();
     }
 
-    Message *QueueMngr::popFront()
+    void QueueMngr::unsubscribe( Endpoint* endpoint, const Message_Name msgName )
     {
-        Message *value = m_queue.front();
+        std::unique_lock<std::mutex> lock( m_mutex );
+
+        if ( m_subscriberList.count( msgName ) )
+        {
+            m_subscriberList.find( msgName )->second.remove( endpoint );
+        }
+
+        lock.unlock();
+        m_condition.notify_one();
+    }
+
+    void QueueMngr::push( const Message* value )
+    {
+        std::unique_lock<std::mutex> lock( m_mutex );
+
+        m_queue.push( value->clone() );
+
+        lock.unlock();
+        m_condition.notify_one();
+    }
+
+    Message* QueueMngr::popFront()
+    {
+        Message* value = m_queue.front();
         m_queue.pop();
 
         return value;
@@ -23,38 +56,18 @@ namespace PubSub
 
     void QueueMngr::dispatch()
     {
-        std::unique_lock<std::mutex> lock(m_mutex);
+        std::unique_lock<std::mutex> lock( m_mutex );
 
-        while (!m_queue.empty())
+        while ( !m_queue.empty() )
         {
-            Message *msg = popFront();
+            Message* msg = popFront();
 
-            for (unsigned int i{0u}; i < m_subscriberList[msg->getMessageName()].size(); ++i)
+            for ( EndpointList::iterator it = m_subscriberList[msg->getMessageName()].begin(); it != m_subscriberList[msg->getMessageName()].end(); ++it )
             {
-                m_subscriberList[msg->getMessageName()][i]->writeToBuffer(msg->clone());
+                (*it)->writeToBuffer( msg->clone() );
             }
 
             delete msg;
-        }
-
-        lock.unlock();
-        m_condition.notify_one();
-    }
-
-    void QueueMngr::getSubscriptionList(Component *comp, MessageSubscription &list)
-    {
-        std::unique_lock<std::mutex> lock(m_mutex);
-
-        for (auto it = list.begin(); it != list.end(); ++it)
-        {
-            if (m_subscriberList.count(it->first))
-            {
-                m_subscriberList.find(it->first)->second.push_back(comp);
-            }
-            else
-            {
-                m_subscriberList.insert(std::make_pair(it->first, std::vector<Component *>{comp}));
-            }
         }
 
         lock.unlock();

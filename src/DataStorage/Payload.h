@@ -104,11 +104,8 @@ struct OutputPayloadBase :  public PayloadBase<Message>, public PayloadBase<Mess
     }
 };
 
-template <typename Base>
-struct Terminator : public Base
-{
-    static constexpr decPriorityType DECORATOR_PRIORITY = 999999u;
-};
+template <typename>
+struct Terminator {};
 
 template <typename Base, template <typename> typename Decorator>
 struct IsValidDecorator

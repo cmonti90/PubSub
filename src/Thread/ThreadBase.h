@@ -12,7 +12,7 @@ namespace PubSub
 
     class ThreadBase
     {
-    public:
+      public:
         enum ThreadState
         {
             INITIALIZE,
@@ -22,28 +22,28 @@ namespace PubSub
 
         ThreadBase();
         virtual ~ThreadBase();
-        ThreadBase(ThreadBase &&obj);
+        ThreadBase( ThreadBase &&obj );
 
-        ThreadBase &operator=(ThreadBase &&obj);
+        ThreadBase& operator=( ThreadBase &&obj );
 
         void stop();
         void join();
 
         virtual unsigned int getProcessCount() const = 0;
-        void resetProcessCount() { procIdx = 0u; }
+        void resetProcessCount() {
+            procIdx = 0u;
+        }
 
-        virtual void passSubscriptionLists() = 0;
-
-    protected:
+      protected:
         unsigned int procIdx;
         std::thread thread;
 
         std::mutex mtx;
         std::condition_variable cv;
 
-    private:
-        ThreadBase(const ThreadBase &) = delete;
-        ThreadBase &operator=(const ThreadBase &) = delete;
+      private:
+        ThreadBase( const ThreadBase& ) = delete;
+        ThreadBase& operator=( const ThreadBase& ) = delete;
     };
 
 } // namespace PubSub

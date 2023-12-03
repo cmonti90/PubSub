@@ -7,32 +7,33 @@
 
 namespace PubSub
 {
-    typedef std::vector<SimComponent *> SimComponentList;
+    typedef std::vector<SimComponent*> SimComponentList;
     class SimThread : public ThreadBase
     {
-    public:
+      public:
 
         SimThread();
         virtual ~SimThread();
-        SimThread(SimThread &&obj);
+        SimThread( SimThread &&obj );
 
-        SimThread &operator=(SimThread &&obj);
+        SimThread& operator=( SimThread &&obj );
 
-        virtual void run(const ThreadState &state, unsigned int counter);
+        virtual void run( const ThreadState& state, unsigned int counter );
 
-        void addComp(SimComponent *comp);
+        void addComp( SimComponent* comp );
 
-        virtual unsigned int getProcessCount() const override { return m_simProcs.size(); }
-        
-        virtual void passSubscriptionLists() override;
+        virtual unsigned int getProcessCount() const override
+        {
+            return m_simProcs.size();
+        }
 
-    protected:
+      protected:
         SimComponentList m_simProcs;
 
-    private:
+      private:
 
-        SimThread(const SimThread &) = delete;
-        SimThread &operator=(const SimThread &) = delete;
+        SimThread( const SimThread& ) = delete;
+        SimThread& operator=( const SimThread& ) = delete;
     };
 
 } // namespace PubSub
