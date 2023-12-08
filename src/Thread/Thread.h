@@ -7,7 +7,7 @@
 
 namespace PubSub
 {
-    typedef std::vector<Component*> ComponentList;
+    typedef std::vector< Component* > ComponentList;
     class Thread : public ThreadBase
     {
       public:

@@ -18,35 +18,31 @@ namespace PubSub
     {
       public:
         Module();
+        Module( const std::shared_ptr< QueueMngr >& queueMngr );
         virtual ~Module() = default;
 
         void addThread( Thread& thread );
         void addCompToThread( Component* comp );
 
-        void addSimComp( SimComponent* comp );
-
         void initialize();
-        void start();
+        void iterate();
         void stop( bool over_ride = false );
         void finalize();
 
-        void run( const ThreadBase::ThreadState& threadState );
-
       protected:
+
         unsigned int m_threadCount{0u};
         unsigned int maxProcCount{0u};
 
         ThreadList m_threads;
-
-        SimThread m_simThread;
 
         std::shared_ptr<QueueMngr> m_queueMngr;
 
         std::shared_ptr<Time> m_time;
 
       private:
+        void run( const ThreadBase::ThreadState& threadState );
         void runSW( const ThreadBase::ThreadState& threadState );
-        void runSim( const ThreadBase::ThreadState& threadState );
         void dispatchMessages( const ThreadBase::ThreadState& threadState );
 
         Module( const Module& ) = delete;

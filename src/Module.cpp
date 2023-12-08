@@ -8,6 +8,10 @@ namespace PubSub
     {
     }
 
+    Module::Module( const std::shared_ptr< QueueMngr >& queueMngr) : m_threadCount( 0u ), maxProcCount( 0u ), m_queueMngr( queueMngr ), m_time( new Time() )
+    {
+    }
+
     void Module::addThread( Thread& thread )
     {
         m_threads.emplace_back( std::move( thread ) );
@@ -24,17 +28,12 @@ namespace PubSub
         }
     }
 
-    void Module::addSimComp( SimComponent* comp )
-    {
-        m_simThread.addComp( comp );
-    }
-
     void Module::initialize()
     {
         run( ThreadBase::ThreadState::INITIALIZE );
     }
 
-    void Module::start()
+    void Module::iterate()
     {
         run( ThreadBase::ThreadState::UPDATE );
     }
@@ -46,8 +45,6 @@ namespace PubSub
             m_threads[threadIdx].stop();
         }
 
-        m_simThread.stop();
-
         if ( !over_ride )
         {
             finalize();
@@ -56,8 +53,6 @@ namespace PubSub
             {
                 m_threads[threadIdx].stop();
             }
-
-            m_simThread.stop();
         }
     }
 
@@ -65,14 +60,12 @@ namespace PubSub
     {
         run( ThreadBase::ThreadState::FINALIZE );
     }
-    
+
     void Module::run( const ThreadBase::ThreadState& threadState )
     {
         runSW( threadState );
 
         m_time->incrementTime();
-
-        runSim( threadState );
     }
 
     void Module::runSW( const ThreadBase::ThreadState& threadState )
@@ -89,26 +82,14 @@ namespace PubSub
             {
                 m_threads[threadIdx].join();
             }
-
-            dispatchMessages( threadState );
         }
 
         for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )
         {
             m_threads[threadIdx].resetProcessCount();
         }
-    }
 
-    void Module::runSim( const ThreadBase::ThreadState& threadState )
-    {
-        for ( unsigned int procIdx{0u}; procIdx < m_simThread.getProcessCount(); procIdx++ )
-        {
-            m_simThread.run( threadState, m_time->getCounter() );
-
-            dispatchMessages( threadState );
-        }
-
-        m_simThread.resetProcessCount();
+        dispatchMessages( threadState );
     }
 
     void Module::dispatchMessages( const ThreadBase::ThreadState& threadState )

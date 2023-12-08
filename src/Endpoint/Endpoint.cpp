@@ -3,6 +3,12 @@
 
 namespace PubSub
 {
+    Endpoint::Endpoint()
+        : m_queue_mngr( nullptr )
+        , m_component ( nullptr )
+    {
+    }
+
     Endpoint::Endpoint( std::shared_ptr<QueueMngr>& queue_mngr )
         : m_queue_mngr( queue_mngr )
         , m_component ( nullptr )
@@ -11,6 +17,16 @@ namespace PubSub
 
     Endpoint::~Endpoint()
     {
+    }
+
+    void Endpoint::configure( std::shared_ptr<QueueMngr>& queue_mngr )
+    {
+        std::unique_lock<std::mutex> lock( m_mutex );
+
+        m_queue_mngr = queue_mngr;
+
+        lock.unlock();
+        m_condition.notify_one();
     }
 
     void Endpoint::associate( Component* comp )
@@ -27,9 +43,12 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock( m_mutex );
 
-        m_subscribed_msg.insert( std::make_pair( msg->getMessageName(), msg_type ) );
+        if ( m_queue_mngr )
+        {
+            m_subscribed_msg.insert( std::make_pair( msg->getMessageName(), msg_type ) );
 
-        m_queue_mngr->subscribe( this, msg->getMessageName() );
+            m_queue_mngr->subscribe( this, msg->getMessageName() );
+        }
 
         lock.unlock();
         m_condition.notify_one();
@@ -39,7 +58,12 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock( m_mutex );
 
-        m_subscribed_msg.erase( msg->getMessageName() );
+        if ( m_queue_mngr )
+        {
+            m_subscribed_msg.erase( msg->getMessageName() );
+
+            m_queue_mngr->unsubscribe( this, msg->getMessageName() );
+        }
 
         lock.unlock();
         m_condition.notify_one();
@@ -140,24 +164,24 @@ namespace PubSub
     {
         std::unique_lock<std::mutex> lock( m_mutex );
 
-        
-        switch (m_subscribed_msg.find(msg->getMessageName())->second)
+
+        switch ( m_subscribed_msg.find( msg->getMessageName() )->second )
         {
 
-        case ACTIVE:
-        {
-            writeToBuffer(msg, m_active_msg_buffer);
-        }
-        break;
+            case ACTIVE:
+                {
+                    writeToBuffer( msg, m_active_msg_buffer );
+                }
+                break;
 
-        case PASSIVE:
-        {
-            writeToBuffer(msg, m_passive_msg_buffer);
-        }
-        break;
+            case PASSIVE:
+                {
+                    writeToBuffer( msg, m_passive_msg_buffer );
+                }
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
 
         lock.unlock();

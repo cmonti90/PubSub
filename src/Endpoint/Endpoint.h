@@ -13,10 +13,11 @@ namespace PubSub
       public:
         typedef std::unordered_map< Message_Name, Message_Type > MessageSubscriptionList;
 
-        Endpoint() = delete;
+        Endpoint();
         Endpoint( std::shared_ptr<QueueMngr>& queue_mngr );
         virtual ~Endpoint();
 
+        void configure( std::shared_ptr<QueueMngr>& queue_mngr );
         void associate( Component* comp );
         void subscribe( const Message* msg, const Message_Type msg_type = Message_Type::ACTIVE );
         void unsubscribe( const Message* msg );
