@@ -2,9 +2,7 @@
 #define DC26027A_04B1_4A1D_B196_A076A42F9DFD
 
 #include "Component.h"
-#include "SimComponent.h"
 #include "Thread.h"
-#include "SimThread.h"
 #include "QueueMngr.h"
 #include "Time.h"
 #include <thread>
