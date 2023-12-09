@@ -27,6 +27,8 @@ namespace PubSub
         void stop( bool over_ride = false );
         void finalize();
 
+        virtual void launch() = 0;
+
       protected:
 
         unsigned int m_threadCount{0u};
@@ -41,7 +43,6 @@ namespace PubSub
       private:
         void run( const ThreadBase::ThreadState& threadState );
         void runSW( const ThreadBase::ThreadState& threadState );
-        void dispatchMessages( const ThreadBase::ThreadState& threadState );
 
         Module( const Module& ) = delete;
         Module& operator=( const Module& ) = delete;

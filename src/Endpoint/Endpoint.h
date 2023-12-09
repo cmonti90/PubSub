@@ -43,7 +43,6 @@ namespace PubSub
         MessageSubscriptionList m_subscribed_msg;
 
         std::shared_ptr< QueueMngr > m_queue_mngr;
-        std::shared_ptr< Component > m_component;
 
         mutable std::mutex m_mutex;
         mutable std::condition_variable m_condition;

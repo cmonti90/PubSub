@@ -5,13 +5,11 @@ namespace PubSub
 {
     Endpoint::Endpoint()
         : m_queue_mngr( nullptr )
-        , m_component ( nullptr )
     {
     }
 
     Endpoint::Endpoint( std::shared_ptr<QueueMngr>& queue_mngr )
         : m_queue_mngr( queue_mngr )
-        , m_component ( nullptr )
     {
     }
 
@@ -32,8 +30,6 @@ namespace PubSub
     void Endpoint::associate( Component* comp )
     {
         std::unique_lock<std::mutex> lock( m_mutex );
-
-        m_component.reset( comp );
 
         lock.unlock();
         m_condition.notify_one();

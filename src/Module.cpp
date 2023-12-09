@@ -88,16 +88,5 @@ namespace PubSub
         {
             m_threads[threadIdx].resetProcessCount();
         }
-
-        dispatchMessages( threadState );
     }
-
-    void Module::dispatchMessages( const ThreadBase::ThreadState& threadState )
-    {
-        if ( threadState == Thread::ThreadState::UPDATE )
-        {
-            m_queueMngr->dispatch();
-        }
-    }
-
 } // namespace PubSub

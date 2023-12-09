@@ -9,7 +9,9 @@ namespace PubSub
     class PayloadEndpoint : public Endpoint
     {
       public:
-        PayloadEndpoint() = delete;
+        PayloadEndpoint() : Endpoint()
+        {
+        }
 
         PayloadEndpoint( std::shared_ptr<QueueMngr>& queue_mngr )
             : Endpoint( queue_mngr )
