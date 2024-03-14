@@ -107,7 +107,9 @@ namespace PubSub
         {
             case ACTIVE:
                 {
-                    msg->copy( m_active_msg_buffer.lower_bound( msg->getMessageName() )->second.get() );
+                    msg->copy( m_active_msg_buffer.lower_bound( msg->getMessageName() )->second );
+
+                    delete m_active_msg_buffer.lower_bound( msg->getMessageName() )->second;
 
                     m_active_msg_buffer.erase( m_active_msg_buffer.lower_bound( msg->getMessageName() ) );
                 }
@@ -115,7 +117,9 @@ namespace PubSub
 
             case PASSIVE:
                 {
-                    msg->copy( m_passive_msg_buffer.lower_bound( msg->getMessageName() )->second.get() );
+                    msg->copy( m_passive_msg_buffer.lower_bound( msg->getMessageName() )->second );
+
+                    delete m_passive_msg_buffer.lower_bound( msg->getMessageName() )->second;
 
                     m_passive_msg_buffer.erase( m_passive_msg_buffer.lower_bound( msg->getMessageName() ) );
                 }
@@ -134,10 +138,14 @@ namespace PubSub
 
         if ( !m_passive_msg_buffer.empty() )
         {
+            delete m_passive_msg_buffer.begin()->second;
+
             m_passive_msg_buffer.erase( m_passive_msg_buffer.begin() );
         }
         else if ( !m_active_msg_buffer.empty() )
         {
+            delete m_active_msg_buffer.begin()->second;
+
             m_active_msg_buffer.erase( m_active_msg_buffer.begin() );
         }
 
@@ -163,16 +171,15 @@ namespace PubSub
 
         switch ( m_subscribed_msg.find( msg->getMessageName() )->second )
         {
-
             case ACTIVE:
                 {
-                    writeToBuffer( msg, m_active_msg_buffer );
+                    writeToBuffer( msg->clone(), m_active_msg_buffer );
                 }
                 break;
 
             case PASSIVE:
                 {
-                    writeToBuffer( msg, m_passive_msg_buffer );
+                    writeToBuffer( msg->clone(), m_passive_msg_buffer );
                 }
                 break;
 
@@ -186,7 +193,7 @@ namespace PubSub
 
     void Endpoint::writeToBuffer( Message* msg, MessageBuffer& buffer )
     {
-        buffer.insert( MessageBuffer::value_type( msg->getMessageName(), std::unique_ptr<Message>( msg->clone() ) ) );
+        buffer.insert( MessageBuffer::value_type( msg->getMessageName(), msg ) );
     }
 
     bool Endpoint::hasActiveMessage() const

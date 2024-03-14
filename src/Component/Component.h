@@ -30,7 +30,7 @@ namespace PubSub
 
     typedef std::string                                                     Component_Label;
     typedef std::unordered_map< Message_Name, Message_Type >                MessageSubscription;
-    typedef std::multimap     < Message_Name, std::unique_ptr< Message > >  MessageBuffer;
+    typedef std::multimap     < Message_Name, Message* >  MessageBuffer;
 
     class QueueMngr;
     class Component

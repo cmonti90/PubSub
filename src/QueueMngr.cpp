@@ -1,6 +1,7 @@
 
 #include "QueueMngr.h"
 #include "Endpoint.h"
+
 namespace PubSub
 {
     void QueueMngr::subscribe( Endpoint* endpoint, const Message_Name msgName )
@@ -14,7 +15,7 @@ namespace PubSub
         }
         else
         {
-            m_subscriberList.insert( std::make_pair( msgName, std::list<Endpoint*>{endpoint} ) );
+            m_subscriberList.insert( std::make_pair( msgName, std::list<Endpoint*> {endpoint} ) );
         }
 
         m_subscriberList[msgName].unique();
@@ -64,7 +65,7 @@ namespace PubSub
 
             for ( EndpointList::iterator it = m_subscriberList[msg->getMessageName()].begin(); it != m_subscriberList[msg->getMessageName()].end(); ++it )
             {
-                (*it)->writeToBuffer( msg->clone() );
+                ( *it )->writeToBuffer( msg );
             }
 
             delete msg;
