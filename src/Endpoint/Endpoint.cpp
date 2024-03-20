@@ -15,6 +15,20 @@ namespace PubSub
 
     Endpoint::~Endpoint()
     {
+        std::unique_lock<std::mutex> lock( m_mutex );
+
+        for ( auto& msg : m_active_msg_buffer )
+        {
+            delete msg.second;
+        }
+
+        for ( auto& msg : m_passive_msg_buffer )
+        {
+            delete msg.second;
+        }
+
+        lock.unlock();
+        m_condition.notify_one();
     }
 
     void Endpoint::configure( std::shared_ptr<QueueMngr>& queue_mngr )
