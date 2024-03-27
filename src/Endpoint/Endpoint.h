@@ -18,7 +18,10 @@ namespace PubSub
         virtual ~Endpoint();
 
         void configure( std::shared_ptr<QueueMngr>& queue_mngr );
-        void associate( Component* comp );
+
+        void setPassiveDepth( const unsigned int depth );
+        void setActiveDepth( const unsigned int depth );
+
         void subscribe( const Message* msg, const Message_Type msg_type = Message_Type::ACTIVE );
         void unsubscribe( const Message* msg );
 
@@ -36,6 +39,9 @@ namespace PubSub
 
         void writeToBuffer( Message* msg );
         void writeToBuffer( Message* msg, MessageBuffer& buffer );
+
+        unsigned int m_passive_depth;
+        unsigned int m_active_depth;
 
         MessageBuffer m_active_msg_buffer;
         MessageBuffer m_passive_msg_buffer;

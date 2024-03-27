@@ -41,9 +41,21 @@ namespace PubSub
         m_condition.notify_one();
     }
 
-    void Endpoint::associate( Component* comp )
+    void Endpoint::setPassiveDepth( const unsigned int depth )
     {
         std::unique_lock<std::mutex> lock( m_mutex );
+
+        m_passive_depth = depth;
+
+        lock.unlock();
+        m_condition.notify_one();
+    }
+
+    void Endpoint::setActiveDepth( const unsigned int depth )
+    {
+        std::unique_lock<std::mutex> lock( m_mutex );
+
+        m_active_depth = depth;
 
         lock.unlock();
         m_condition.notify_one();
@@ -187,12 +199,26 @@ namespace PubSub
         {
             case ACTIVE:
                 {
+                    if ( m_active_msg_buffer.size() >= m_active_depth )
+                    {
+                        delete m_active_msg_buffer.begin()->second;
+
+                        m_active_msg_buffer.erase( m_active_msg_buffer.begin() );
+                    }
+
                     writeToBuffer( msg->clone(), m_active_msg_buffer );
                 }
                 break;
 
             case PASSIVE:
                 {
+                    if ( m_passive_msg_buffer.size() >= m_passive_depth )
+                    {
+                        delete m_passive_msg_buffer.begin()->second;
+
+                        m_passive_msg_buffer.erase( m_passive_msg_buffer.begin() );
+                    }
+                    
                     writeToBuffer( msg->clone(), m_passive_msg_buffer );
                 }
                 break;
