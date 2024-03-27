@@ -8,7 +8,7 @@ namespace PubSub
     {
     }
 
-    Module::Module( const std::shared_ptr< QueueMngr >& queueMngr) : m_threadCount( 0u ), maxProcCount( 0u ), m_queueMngr( queueMngr ), m_time( new Time() )
+    Module::Module( const std::shared_ptr< QueueMngr >& queueMngr ) : m_threadCount( 0u ), maxProcCount( 0u ), m_queueMngr( queueMngr ), m_time( new Time() )
     {
     }
 
@@ -76,12 +76,18 @@ namespace PubSub
             for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )
             {
                 m_threads[threadIdx].run( threadState );
+
+                #ifdef SIMULATION
+                m_threads[threadIdx].join();
+                #endif
             }
 
-            for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )
+            #ifndef SIMULATION
+            for ( unsigned int threadIdx {0u}; threadIdx < m_threads.size(); threadIdx++ )
             {
                 m_threads[threadIdx].join();
             }
+            #endif
         }
 
         for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )

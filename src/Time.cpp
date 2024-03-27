@@ -3,7 +3,11 @@
 
 namespace PubSub
 {
-    Time::Time() : timeNow( 0.0 ), counter( 0u ), mtx(), cv()
+    Time::Time()
+    : timeNow( 0.0 )
+    , counter( 0u )
+    , mtx()
+    , cv()
     {
     }
 

@@ -20,6 +20,8 @@ add_link_options(-lpthread)
 
 add_library(${target} SHARED ${SOURCES} ${SOURCES})
 
+target_compile_definitions(${target} PRIVATE SIMULATION)
+
 set_property(TARGET ${target} PROPERTY VERSION ${version})
 set_property(TARGET ${target} PROPERTY SOVERSION 1)
 set_property(TARGET ${target} PROPERTY
