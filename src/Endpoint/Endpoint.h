@@ -40,8 +40,8 @@ namespace PubSub
         void writeToBuffer( Message* msg );
         void writeToBuffer( Message* msg, MessageBuffer& buffer );
 
-        unsigned int m_passive_depth;
         unsigned int m_active_depth;
+        unsigned int m_passive_depth;
 
         MessageBuffer m_active_msg_buffer;
         MessageBuffer m_passive_msg_buffer;

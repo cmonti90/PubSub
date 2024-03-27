@@ -5,6 +5,8 @@ namespace PubSub
 {
     Endpoint::Endpoint()
         : m_queue_mngr( nullptr )
+        , m_active_depth( 10u )
+        , m_passive_depth( 1u )
     {
     }
 
@@ -218,7 +220,7 @@ namespace PubSub
 
                         m_passive_msg_buffer.erase( m_passive_msg_buffer.begin() );
                     }
-                    
+
                     writeToBuffer( msg->clone(), m_passive_msg_buffer );
                 }
                 break;
