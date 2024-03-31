@@ -3,6 +3,8 @@ set(exportedTarget PubSubTarget)
 
 set(version 1.0.0)
 
+set(CMAKE_CXX_STANDARD 20)
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 

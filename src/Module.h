@@ -8,19 +8,22 @@
 #include <thread>
 #include <vector>
 #include <memory>
+#include <unordered_map>
 
 namespace PubSub
 {
-    typedef std::vector<Thread> ThreadList;
+    typedef std::unordered_map< ThreadName, Thread* > ThreadList;
+
     class Module
     {
       public:
+
         Module();
         Module( const std::shared_ptr< QueueMngr >& queueMngr );
         virtual ~Module() = default;
 
-        void addThread( Thread& thread );
-        void addCompToThread( Component* comp );
+        void RegisterThread( Thread& thread );
+        void AddCompToThread( Thread& thread, Component* comp );
 
         void initialize();
         void iterate();
@@ -31,18 +34,26 @@ namespace PubSub
 
       protected:
 
-        unsigned int m_threadCount{0u};
-        unsigned int maxProcCount{0u};
+        unsigned int m_numThreadsActive;
 
         ThreadList m_threads;
 
-        std::shared_ptr<QueueMngr> m_queueMngr;
-
-        std::shared_ptr<Time> m_time;
+        std::shared_ptr< QueueMngr > m_queueMngr;
+        
+        std::shared_ptr< Time > m_time;
 
       private:
-        void run( const ThreadBase::ThreadState& threadState );
-        void runSW( const ThreadBase::ThreadState& threadState );
+
+        static constexpr unsigned int MAX_THREADS = 4u;
+
+        void Run( const Thread::ThreadState& threadState );
+        void RunSW( const Thread::ThreadState& threadState );
+        void KickoffThreads( const Thread::ThreadState& threadState );
+        void RunThread( Thread* thread, const Thread::ThreadState& threadState );
+        void JoinThread( Thread* thread );
+        void JoinAllThreads();
+
+        std::thread* m_thread;
 
         Module( const Module& ) = delete;
         Module& operator=( const Module& ) = delete;

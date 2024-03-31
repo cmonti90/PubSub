@@ -4,95 +4,113 @@
 namespace PubSub
 {
 
-    Module::Module() : m_threadCount( 0u ), maxProcCount( 0u ), m_queueMngr( new QueueMngr() ), m_time( new Time() )
+    Module::Module()
+        : m_numThreadsActive( 0u )
+        , m_queueMngr( new QueueMngr() )
+        , m_time( new Time() )
     {
     }
 
-    Module::Module( const std::shared_ptr< QueueMngr >& queueMngr ) : m_threadCount( 0u ), maxProcCount( 0u ), m_queueMngr( queueMngr ), m_time( new Time() )
+    Module::Module( const std::shared_ptr< QueueMngr >& queueMngr )
+        : m_numThreadsActive( 0u )
+        , m_queueMngr( queueMngr )
+        , m_time( new Time() )
     {
     }
 
-    void Module::addThread( Thread& thread )
+    void Module::RegisterThread( Thread& thread )
     {
-        m_threads.emplace_back( std::move( thread ) );
-        m_threadCount++;
-    }
-
-    void Module::addCompToThread( Component* comp )
-    {
-        if ( !m_threads.empty() )
+        if ( m_threads.contains( thread.GetThreadName() ) )
         {
-            ( m_threads.end() - 1 )->addComp( comp );
-
-            maxProcCount = maxProcCount < ( m_threads.end() - 1 )->getProcessCount() ? ( m_threads.end() - 1 )->getProcessCount() : maxProcCount;
+            std::runtime_error( "Thread: " + thread.GetThreadName() + " already registered!" );
         }
+
+        m_threads.insert( { thread.GetThreadName(), &thread } );
+    }
+
+    void Module::AddCompToThread( Thread& thread, Component* comp )
+    {
+        m_threads.at( thread.GetThreadName() )->AddComp( comp );
     }
 
     void Module::initialize()
     {
-        run( ThreadBase::ThreadState::INITIALIZE );
+        Run( Thread::ThreadState::INITIALIZE );
     }
 
     void Module::iterate()
     {
-        run( ThreadBase::ThreadState::UPDATE );
+        Run( Thread::ThreadState::UPDATE );
+    }
+
+    void Module::finalize()
+    {
+        Run( Thread::ThreadState::FINALIZE );
     }
 
     void Module::stop( bool over_ride )
     {
-        for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )
-        {
-            m_threads[threadIdx].stop();
-        }
+        JoinAllThreads();
 
         if ( !over_ride )
         {
             finalize();
 
-            for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )
-            {
-                m_threads[threadIdx].stop();
-            }
+            JoinAllThreads();
         }
     }
 
-    void Module::finalize()
+    void Module::Run( const Thread::ThreadState& threadState )
     {
-        run( ThreadBase::ThreadState::FINALIZE );
-    }
-
-    void Module::run( const ThreadBase::ThreadState& threadState )
-    {
-        runSW( threadState );
+        RunSW( threadState );
 
         m_time->incrementTime();
     }
 
-    void Module::runSW( const ThreadBase::ThreadState& threadState )
+    void Module::RunSW( const Thread::ThreadState& threadState )
     {
-        for ( unsigned int procIdx{0u}; procIdx < maxProcCount; procIdx++ )
+        KickoffThreads( threadState );
+
+        #ifndef SIMULATION
+        JoinAllThreads();
+        #endif
+    }
+
+    void Module::KickoffThreads( const Thread::ThreadState& threadState )
+    {
+        for ( ThreadList::iterator thisThread = m_threads.begin(); thisThread != m_threads.end(); thisThread++ )
         {
+            RunThread( thisThread->second, threadState );
 
-            for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )
-            {
-                m_threads[threadIdx].run( threadState );
-
-                #ifdef SIMULATION
-                m_threads[threadIdx].join();
-                #endif
-            }
-
-            #ifndef SIMULATION
-            for ( unsigned int threadIdx {0u}; threadIdx < m_threads.size(); threadIdx++ )
-            {
-                m_threads[threadIdx].join();
-            }
+            #ifdef SIMULATION
+            JoinThread( thisThread->second );
             #endif
         }
+    }
 
-        for ( unsigned int threadIdx{0u}; threadIdx < m_threads.size(); threadIdx++ )
+    void Module::RunThread( Thread* thread, const Thread::ThreadState& threadState )
+    {
+        thread->Run( threadState );
+
+        m_numThreadsActive++;
+
+        #ifdef SIMULATION
+        JoinThread( thread );
+        #endif
+    }
+
+    void Module::JoinThread( Thread* thread )
+    {
+        // thread->Join();
+
+        m_numThreadsActive--;
+    }
+
+    void Module::JoinAllThreads()
+    {
+        for ( ThreadList::iterator thisThread = m_threads.begin(); thisThread != m_threads.end(); thisThread++ )
         {
-            m_threads[threadIdx].resetProcessCount();
+            JoinThread( thisThread->second );
         }
     }
 } // namespace PubSub

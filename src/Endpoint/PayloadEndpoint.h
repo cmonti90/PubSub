@@ -9,7 +9,8 @@ namespace PubSub
     class PayloadEndpoint : public Endpoint
     {
       public:
-        PayloadEndpoint() : Endpoint()
+        PayloadEndpoint()
+            : Endpoint()
         {
         }
 
@@ -18,18 +19,20 @@ namespace PubSub
         {
         }
 
-        virtual ~PayloadEndpoint() = default;
-
-        template <typename Msg, typename Container>
-        void subscribe( const Container& data, const Message_Type msg_type = Message_Type::ACTIVE )
+        virtual ~PayloadEndpoint()
         {
-            Endpoint::subscribe( &static_cast< const InputPayloadBase<Msg>&>( data ).getInternalMsg(), msg_type );
         }
 
-        template <typename Msg, typename Container>
+        template < typename Msg, typename Container >
+        void subscribe( const Container& data, const Message_Type msg_type = Message_Type::ACTIVE )
+        {
+            Endpoint::subscribe( &static_cast< const InputPayloadBase< Msg >& >( data ).getInternalMsg(), msg_type );
+        }
+
+        template < typename Msg, typename Container >
         void unsubscribe( const Container* data )
         {
-            Endpoint::unsubscribe( &static_cast< const InputPayloadBase<Msg>& >( data ).getInternalMsg() );
+            Endpoint::unsubscribe( &static_cast< const InputPayloadBase< Msg >& >( data ).getInternalMsg() );
         }
 
         template < typename Msg, typename Container >
@@ -47,7 +50,7 @@ namespace PubSub
         }
 
     };
-    
+
 } // namespace PubSub
 
 #endif /* C29A0A47_6FA6_44FD_A165_4D0410005BA8 */

@@ -39,11 +39,11 @@ namespace PubSub
 
         Component() = delete;
         Component( std::shared_ptr<QueueMngr>& queue_mngr, const Component_Label str );
-        virtual ~Component() = default;
+        virtual ~Component();
 
         virtual void initialize() = 0;
-        virtual void update() = 0;
-        virtual void finalize() = 0;
+        virtual void update()     = 0;
+        virtual void finalize()   = 0;
 
         Component_Label getComponentLabel() const;
 
@@ -60,8 +60,8 @@ namespace PubSub
 
         std::shared_ptr< QueueMngr > m_queue_mngr;
 
-        Component( const Component& ) = delete;
-        Component& operator=( const Component& ) = delete;
+        Component( const Component& )             = delete;
+        Component& operator=( const Component& )  = delete;
     };
 } // namespace PubSub
 

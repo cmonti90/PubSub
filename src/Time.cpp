@@ -11,7 +11,15 @@ namespace PubSub
     {
     }
 
-    Time::Time( const Time& obj ) : timeNow( obj.timeNow ), counter( obj.counter ), mtx(), cv()
+    Time::~Time()
+    {
+    }
+
+    Time::Time( const Time& obj )
+    : timeNow( obj.timeNow )
+    , counter( obj.counter )
+    , mtx()
+    , cv()
     {
     }
 

@@ -10,7 +10,7 @@ namespace PubSub
     {
     public:
         Time();
-        ~Time() = default;
+        ~Time();
         Time(const Time &);
 
         static constexpr unsigned int SimulationRunRate = 1000u;

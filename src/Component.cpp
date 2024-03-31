@@ -10,6 +10,10 @@ namespace PubSub
     {
     }
 
+    Component::~Component()
+    {
+    }
+
     Component_Label Component::getComponentLabel() const
     {
         return label;

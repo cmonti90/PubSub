@@ -50,6 +50,12 @@
         "typeinfo": "cpp",
         "iostream": "cpp",
         "map": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "bit": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp"
     }
 }
