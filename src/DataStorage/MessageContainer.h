@@ -1,21 +1,21 @@
-#ifndef A8BD1AC4_C289_4FC2_B177_23C26612708C
-#define A8BD1AC4_C289_4FC2_B177_23C26612708C
+#ifndef PUBSUB_MESSAGE_CONTAINER_H
+#define PUBSUB_MESSAGE_CONTAINER_H
 
 namespace Intf
 {
-    template<typename ...Args>
-    struct MessageContainer : public Args...
+template<typename ...Args>
+struct MessageContainer : public Args...
+{
+    void initialize()
     {
-        void initialize()
-        {
-            (Args::initialize(), ...);
-        }
+        ( Args::initialize(), ... );
+    }
 
-        void reset()
-        {
-            (Args::reset(), ...);
-        }
-    };
+    void reset()
+    {
+        ( Args::reset(), ... );
+    }
+};
 }
 
-#endif /* A8BD1AC4_C289_4FC2_B177_23C26612708C */
+#endif /* PUBSUB_MESSAGE_CONTAINER_H */

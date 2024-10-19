@@ -1,5 +1,5 @@
-#ifndef MESSAGEPAYLOADTEMPLATE_H
-#define MESSAGEPAYLOADTEMPLATE_H
+#ifndef PUBSUB_MESSAGEPAYLOADTEMPLATE_H
+#define PUBSUB_MESSAGEPAYLOADTEMPLATE_H
 
 #include "Message.h"
 
@@ -53,4 +53,4 @@
         }                                                                         \
     };
 
-#endif /* MESSAGEPAYLOADTEMPLATE_H */
+#endif /* PUBSUB_MESSAGEPAYLOADTEMPLATE_H */

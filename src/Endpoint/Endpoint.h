@@ -1,5 +1,5 @@
-#ifndef CC22A0C1_50F1_47C3_AA9D_7A844A3CF145
-#define CC22A0C1_50F1_47C3_AA9D_7A844A3CF145
+#ifndef PUBSUB_ENDPOINT_H
+#define PUBSUB_ENDPOINT_H
 
 #include "Message.h"
 #include "Component.h"
@@ -8,55 +8,54 @@
 
 namespace PubSub
 {
-    class Endpoint
-    {
-      public:
-        typedef std::unordered_map< Message_Name, Message_Type > MessageSubscriptionList;
+class Endpoint
+{
+public:
+    typedef std::unordered_map< Message_Name, Message_Type > MessageSubscriptionList;
 
-        Endpoint();
-        Endpoint( std::shared_ptr<QueueMngr>& queue_mngr );
-        virtual ~Endpoint();
+    Endpoint();
+    Endpoint( std::shared_ptr<QueueMngr>& queue_mngr );
+    ~Endpoint();
 
-        void configure( std::shared_ptr<QueueMngr>& queue_mngr );
+    void configure( std::shared_ptr<QueueMngr>& queue_mngr );
 
-        void setPassiveDepth( const unsigned int depth );
-        void setActiveDepth( const unsigned int depth );
+    void setPassiveDepth( const unsigned int depth );
+    void setActiveDepth( const unsigned int depth );
 
-        void subscribe( const Message* msg, const Message_Type msg_type = Message_Type::ACTIVE );
-        void unsubscribe( const Message* msg );
+    void subscribe( const Message* msg, const Message_Type msg_type = Message_Type::ACTIVE );
+    void unsubscribe( const Message* msg );
 
-        MessageStatus peek( Message_Label& msg_label ) const;
-        void send( Message* msg ) const;
-        void receive( Message* msg );
+    MessageStatus peek( Message_Label& msg_label ) const;
+    void send( Message* msg ) const;
+    void receive( Message* msg );
 
-        void removeTopMessage();
-        void clear();
-        
-        bool hasActiveMessage() const;
+    void removeTopMessage();
+    void clear();
 
-      private:
-        friend class QueueMngr;
+    bool hasActiveMessage() const;
 
-        void writeToBuffer( Message* msg );
-        void writeToBuffer( Message* msg, MessageBuffer& buffer );
+private:
+    friend class QueueMngr;
 
-        unsigned int m_active_depth;
-        unsigned int m_passive_depth;
+    void writeToBuffer( Message* msg );
+    void writeToBuffer( Message* msg, MessageBuffer& buffer );
 
-        MessageBuffer m_active_msg_buffer;
-        MessageBuffer m_passive_msg_buffer;
+    unsigned int m_active_depth;
+    unsigned int m_passive_depth;
 
-        MessageSubscriptionList m_subscribed_msg;
+    MessageBuffer m_active_msg_buffer;
+    MessageBuffer m_passive_msg_buffer;
 
-        std::shared_ptr< QueueMngr > m_queue_mngr;
+    MessageSubscriptionList m_subscribed_msg;
 
-        mutable std::mutex m_mutex;
-        mutable std::condition_variable m_condition;
+    std::shared_ptr< QueueMngr > m_queue_mngr;
 
-    };
+    mutable std::mutex m_mutex;
+
+};
 
 } // namespace PubSub
 
 #include "QueueMngr.h"
 
-#endif /* CC22A0C1_50F1_47C3_AA9D_7A844A3CF145 */
+#endif /* PUBSUB_ENDPOINT_H */

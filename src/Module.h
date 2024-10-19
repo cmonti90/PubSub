@@ -1,10 +1,11 @@
-#ifndef DC26027A_04B1_4A1D_B196_A076A42F9DFD
-#define DC26027A_04B1_4A1D_B196_A076A42F9DFD
+#ifndef PUBSUB_MODULE_H
+#define PUBSUB_MODULE_H
 
 #include "Component.h"
 #include "Thread.h"
 #include "QueueMngr.h"
 #include "Time.h"
+
 #include <thread>
 #include <vector>
 #include <memory>
@@ -12,52 +13,49 @@
 
 namespace PubSub
 {
-    typedef std::unordered_map< ThreadName, Thread* > ThreadList;
+typedef std::unordered_map< ThreadName, Thread* > ThreadList;
 
-    class Module
-    {
-      public:
+class Module
+{
+public:
 
-        Module();
-        Module( const std::shared_ptr< QueueMngr >& queueMngr );
-        virtual ~Module() = default;
+    Module();
+    Module( const std::shared_ptr< QueueMngr >& queueMngr );
+    ~Module() = default;
 
-        void RegisterThread( Thread& thread );
-        void AddCompToThread( Thread& thread, Component* comp );
+    void RegisterThread( Thread& thread );
+    void AddCompToThread( Thread& thread, Component* comp );
 
-        void initialize();
-        void iterate();
-        void stop( bool over_ride = false );
-        void finalize();
+    void initialize();
+    void iterate();
+    void stop( bool over_ride = false );
+    void finalize();
 
-        virtual void launch() = 0;
+    virtual void launch() = 0;
 
-      protected:
+protected:
 
-        unsigned int m_numThreadsActive;
+    unsigned int m_numThreadsActive;
 
-        ThreadList m_threads;
+    ThreadList m_threads;
 
-        std::shared_ptr< QueueMngr > m_queueMngr;
-        
-        std::shared_ptr< Time > m_time;
+    std::shared_ptr< QueueMngr > m_queueMngr;
 
-      private:
+    std::shared_ptr< Time > m_time;
 
-        static constexpr unsigned int MAX_THREADS = 4u;
+private:
 
-        void Run( const Thread::ThreadState& threadState );
-        void RunSW( const Thread::ThreadState& threadState );
-        void KickoffThreads( const Thread::ThreadState& threadState );
-        void RunThread( Thread* thread, const Thread::ThreadState& threadState );
-        void JoinThread( Thread* thread );
-        void JoinAllThreads();
+    void Run( const Thread::ThreadState& threadState );
+    void KickoffThreads( const Thread::ThreadState& threadState );
+    void RunThread( Thread* thread, const Thread::ThreadState& threadState );
+    void JoinThread( Thread* thread );
+    void JoinAllThreads();
 
-        std::thread* m_thread;
+    std::thread* m_thread;
 
-        Module( const Module& ) = delete;
-        Module& operator=( const Module& ) = delete;
-    };
+    Module( const Module& ) = delete;
+    Module& operator=( const Module& ) = delete;
+};
 } // namespace PubSub
 
-#endif /* DC26027A_04B1_4A1D_B196_A076A42F9DFD */
+#endif /* PUBSUB_MODULE_H */

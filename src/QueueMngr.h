@@ -1,5 +1,5 @@
-#ifndef D2C30EC4_7B15_4E5E_9288_151C76998994
-#define D2C30EC4_7B15_4E5E_9288_151C76998994
+#ifndef PUBSUB_QUEUEMNGR_H
+#define PUBSUB_QUEUEMNGR_H
 
 #include "Message.h"
 #include "Component.h"
@@ -7,7 +7,6 @@
 
 #include <queue>
 #include <mutex>
-#include <condition_variable>
 #include <unordered_map>
 #include <memory>
 #include <list>
@@ -15,30 +14,29 @@
 
 namespace PubSub
 {
-    class Endpoint;
+class Endpoint;
 
-    typedef std::list<Endpoint*> EndpointList;
-    typedef std::unordered_map<Message_Name, EndpointList> SubcriberList;
+typedef std::list<Endpoint*> EndpointList;
+typedef std::unordered_map<Message_Name, EndpointList> SubcriberList;
 
-    class QueueMngr
-    {
-      public:
-        QueueMngr() = default;
-        ~QueueMngr() = default;
+class QueueMngr
+{
+public:
+    QueueMngr() = default;
+    ~QueueMngr() = default;
 
-        void subscribe( Endpoint* endpoint, const Message_Name msgName );
-        void unsubscribe( Endpoint* endpoint, const Message_Name msgName );
-        void push( const Message* value );
-        Message* popFront();
-        void dispatch();
+    void subscribe( Endpoint* endpoint, const Message_Name msgName );
+    void unsubscribe( Endpoint* endpoint, const Message_Name msgName );
+    void push( const Message* value );
+    Message* popFront();
+    void dispatch();
 
-      private:
-        SubcriberList m_subscriberList;
+private:
+    SubcriberList m_subscriberList;
 
-        std::queue<Message*> m_queue;
-        std::mutex m_mutex;
-        std::condition_variable m_condition;
-    };
+    std::queue<Message*> m_queue;
+    std::mutex m_mutex;
+};
 } // namespace PubSub
 
-#endif /* D2C30EC4_7B15_4E5E_9288_151C76998994 */
+#endif /* PUBSUB_QUEUEMNGR_H */

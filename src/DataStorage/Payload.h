@@ -20,7 +20,7 @@ public:
 
     using PayloadType = decltype( message_.payload );
 
-    PayloadBase() : message_(Message()) {}
+    PayloadBase() : message_( Message() ) {}
     PayloadBase( Message& msg ) : message_( msg ) {}
 
     virtual ~PayloadBase()

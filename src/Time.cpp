@@ -3,65 +3,57 @@
 
 namespace PubSub
 {
-    Time::Time()
-    : timeNow( 0.0 )
-    , counter( 0u )
+Time::Time()
+    : timeNow_( 0.0 )
+    , counter_( 0u )
     , mtx()
     , cv()
-    {
-    }
+{
+}
 
-    Time::~Time()
-    {
-    }
+Time::~Time()
+{
+}
 
-    Time::Time( const Time& obj )
-    : timeNow( obj.timeNow )
-    , counter( obj.counter )
+Time::Time( const Time& obj )
+    : timeNow_( obj.timeNow_ )
+    , counter_( obj.counter_ )
     , mtx()
     , cv()
-    {
-    }
+{
+}
 
-    void Time::incrementTime()
-    {
-        std::unique_lock<std::mutex> lck( mtx );
+void Time::syncTime( const double timeNow )
+{
+    std::unique_lock<std::mutex> lck( mtx );
 
-        timeNow += 1.0 / static_cast<double>( SimulationRunRate );
+    timeNow_ = timeNow;
 
-        counter++;
+    lck.unlock();
+}
 
-        lck.unlock();
-        cv.notify_one();
-    }
+void Time::reset()
+{
+    std::unique_lock<std::mutex> lck( mtx );
 
-    void Time::reset()
-    {
-        std::unique_lock<std::mutex> lck( mtx );
+    timeNow_ = 0.0;
+    counter_ = 0u;
 
-        timeNow = 0.0;
-        counter = 0u;
+    lck.unlock();
+}
 
-        lck.unlock();
-        cv.notify_one();
-    }
+double Time::getTimeNow() const
+{
+    std::lock_guard<std::mutex> lck( mtx );
 
-    void Time::finalize()
-    {
-    }
+    return timeNow_;
+}
 
-    double Time::getTimeNow() const
-    {
-        std::lock_guard<std::mutex> lck( mtx );
+unsigned int Time::getCounter() const
+{
+    std::lock_guard<std::mutex> lck( mtx );
 
-        return timeNow;
-    }
-
-    unsigned int Time::getCounter() const
-    {
-        std::lock_guard<std::mutex> lck( mtx );
-
-        return counter;
-    }
+    return counter_;
+}
 
 } // namespace PubSub

@@ -1,34 +1,31 @@
-#ifndef D7319A1C_DBBF_4452_A940_C7793A94A396
-#define D7319A1C_DBBF_4452_A940_C7793A94A396
+#ifndef PUBSUB_TIME_H
+#define PUBSUB_TIME_H
 
 #include <mutex>
 #include <condition_variable>
 
 namespace PubSub
 {
-    class Time
-    {
-    public:
-        Time();
-        ~Time();
-        Time(const Time &);
+class Time
+{
+public:
+    Time();
+    ~Time();
+    Time( const Time& );
 
-        static constexpr unsigned int SimulationRunRate = 1000u;
+    void syncTime( const double timeNow );
+    void reset();
 
-        void incrementTime();
-        void finalize();
-        void reset();
+    double getTimeNow() const;
+    unsigned int getCounter() const;
 
-        double getTimeNow() const;
-        unsigned int getCounter() const;
+private:
+    double timeNow_{0.0};
+    unsigned int counter_ = 0u;
 
-    private:
-        double timeNow{0.0};
-        unsigned int counter = 0u;
-        
-        mutable std::mutex mtx;
-        mutable std::condition_variable cv;
-    };
+    mutable std::mutex mtx;
+    mutable std::condition_variable cv;
+};
 } // namespace PubSub
 
-#endif /* D7319A1C_DBBF_4452_A940_C7793A94A396 */
+#endif /* PUBSUB_TIME_H */
