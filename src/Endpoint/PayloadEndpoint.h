@@ -51,4 +51,4 @@ public:
 
 } // namespace PubSub
 
-#endif /* PUBSUB_PAYLOAD_ENDPOINT_H */
+#endif // PUBSUB_PAYLOAD_ENDPOINT_H

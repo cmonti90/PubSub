@@ -58,4 +58,4 @@ private:
 };
 } // namespace PubSub
 
-#endif /* PUBSUB_MODULE_H */
+#endif // PUBSUB_MODULE_H

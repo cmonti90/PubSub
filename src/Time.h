@@ -28,4 +28,4 @@ private:
 };
 } // namespace PubSub
 
-#endif /* PUBSUB_TIME_H */
+#endif // PUBSUB_TIME_H

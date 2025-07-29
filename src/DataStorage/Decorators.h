@@ -82,4 +82,4 @@ struct Deserialize :
     }
 };
 
-#endif /* PUBSUB_DECORATORS_H */
+#endif // PUBSUB_DECORATORS_H

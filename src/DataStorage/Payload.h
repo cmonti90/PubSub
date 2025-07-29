@@ -139,4 +139,4 @@ struct OutputPayload :  public InheritencePayload< OutputPayloadBase< Message >,
 };
 
 
-#endif /* C3D6F63C_4E40_4AAE_8296_E5302C3C9AEC */
+#endif // C3D6F63C_4E40_4AAE_8296_E5302C3C9AEC

@@ -33,4 +33,4 @@ public:
 
 } // namespace PubSub
 
-#endif /* PUBSUB_MESSAGE_H */
+#endif // PUBSUB_MESSAGE_H

@@ -59,4 +59,4 @@ private:
 
 } // namespace PubSub
 
-#endif /* PUBSUB_THREAD_H */
+#endif // PUBSUB_THREAD_H

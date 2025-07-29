@@ -65,4 +65,4 @@ private:
 
 #include "QueueMngr.h"
 
-#endif /* PUBSUB_ENDPOINT_H */
+#endif // PUBSUB_ENDPOINT_H

@@ -39,4 +39,4 @@ private:
 };
 } // namespace PubSub
 
-#endif /* PUBSUB_QUEUEMNGR_H */
+#endif // PUBSUB_QUEUEMNGR_H

@@ -68,4 +68,4 @@ private:
 
 #include "QueueMngr.h"
 
-#endif /* PUBSUB_COMPONENT_H */
+#endif // PUBSUB_COMPONENT_H

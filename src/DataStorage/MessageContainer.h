@@ -18,4 +18,4 @@ struct MessageContainer : public Args...
 };
 }
 
-#endif /* PUBSUB_MESSAGE_CONTAINER_H */
+#endif // PUBSUB_MESSAGE_CONTAINER_H
