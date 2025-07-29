@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.sty": "latex",
         "array": "cpp",
         "atomic": "cpp",
         "*.tcc": "cpp",
@@ -57,6 +58,7 @@
         "numbers": "cpp",
         "semaphore": "cpp",
         "stop_token": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "__mutex_base": "cpp"
     }
 }
