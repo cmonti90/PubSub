@@ -6,7 +6,7 @@ namespace PubSub
 {
 void QueueMngr::subscribe( Endpoint* endpoint, const Message_Name msgName )
 {
-    std::unique_lock<std::mutex> lock( m_mutex );
+    std::unique_lock< std::mutex > lock( m_mutex );
 
     if ( m_subscriberList.count( msgName ) )
     {
@@ -15,7 +15,7 @@ void QueueMngr::subscribe( Endpoint* endpoint, const Message_Name msgName )
     }
     else
     {
-        m_subscriberList.insert( std::make_pair( msgName, std::list<Endpoint*> {endpoint} ) );
+        m_subscriberList.insert( std::make_pair( msgName, std::list< Endpoint* > {endpoint} ) );
     }
 
     m_subscriberList[msgName].unique();
@@ -25,7 +25,7 @@ void QueueMngr::subscribe( Endpoint* endpoint, const Message_Name msgName )
 
 void QueueMngr::unsubscribe( Endpoint* endpoint, const Message_Name msgName )
 {
-    std::unique_lock<std::mutex> lock( m_mutex );
+    std::unique_lock< std::mutex > lock( m_mutex );
 
     if ( m_subscriberList.count( msgName ) )
     {
@@ -37,7 +37,7 @@ void QueueMngr::unsubscribe( Endpoint* endpoint, const Message_Name msgName )
 
 void QueueMngr::push( const Message* value )
 {
-    std::unique_lock<std::mutex> lock( m_mutex );
+    std::unique_lock< std::mutex > lock( m_mutex );
 
     m_queue.push( value->clone() );
 
@@ -54,7 +54,7 @@ Message* QueueMngr::popFront()
 
 void QueueMngr::dispatch()
 {
-    std::unique_lock<std::mutex> lock( m_mutex );
+    std::unique_lock< std::mutex > lock( m_mutex );
 
     while ( !m_queue.empty() )
     {

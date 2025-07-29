@@ -16,8 +16,8 @@ namespace PubSub
 {
 class Endpoint;
 
-typedef std::list<Endpoint*> EndpointList;
-typedef std::unordered_map<Message_Name, EndpointList> SubcriberList;
+typedef std::list< Endpoint* > EndpointList;
+typedef std::unordered_map< Message_Name, EndpointList > SubcriberList;
 
 class QueueMngr
 {
@@ -34,7 +34,7 @@ public:
 private:
     SubcriberList m_subscriberList;
 
-    std::queue<Message*> m_queue;
+    std::queue< Message* > m_queue;
     std::mutex m_mutex;
 };
 } // namespace PubSub

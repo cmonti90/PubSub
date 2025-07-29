@@ -24,7 +24,7 @@ Thread::Thread( Thread& obj )
 
 void Thread::Run( const ThreadState& threadState )
 {
-    std::unique_lock<std::mutex> lck( mtx );
+    std::unique_lock< std::mutex > lck( mtx );
 
     if ( threadState == ThreadState::INITIALIZE )
     {
@@ -76,7 +76,7 @@ void Thread::RunFinalize()
 
 void Thread::AddComp( Component* comp )
 {
-    std::unique_lock<std::mutex> lck( mtx );
+    std::unique_lock< std::mutex > lck( mtx );
 
     for ( unsigned int procIdx = 0u; procIdx < m_procs.size(); procIdx++ )
     {

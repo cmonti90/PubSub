@@ -38,7 +38,7 @@ class Component
 public:
 
     Component() = delete;
-    Component( std::shared_ptr<QueueMngr>& queue_mngr, const Component_Label str );
+    Component( std::shared_ptr< QueueMngr >& queue_mngr, const Component_Label str );
     ~Component() = default;
 
     virtual void initialize() = 0;

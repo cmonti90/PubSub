@@ -39,7 +39,7 @@
         void copy(const Message *other) override                                  \
                                                                                   \
         {                                                                         \
-            const MsgName *pOther = dynamic_cast<const MsgName *>(other);         \
+            const MsgName *pOther = dynamic_cast< const MsgName* >(other);         \
                                                                                   \
             if (pOther != nullptr)                                                \
             {                                                                     \

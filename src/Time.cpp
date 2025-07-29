@@ -25,7 +25,7 @@ Time::Time( const Time& obj )
 
 void Time::syncTime( const double timeNow )
 {
-    std::unique_lock<std::mutex> lck( mtx );
+    std::unique_lock< std::mutex > lck( mtx );
 
     timeNow_ = timeNow;
 
@@ -34,7 +34,7 @@ void Time::syncTime( const double timeNow )
 
 void Time::reset()
 {
-    std::unique_lock<std::mutex> lck( mtx );
+    std::unique_lock< std::mutex > lck( mtx );
 
     timeNow_ = 0.0;
     counter_ = 0u;
@@ -44,14 +44,14 @@ void Time::reset()
 
 double Time::getTimeNow() const
 {
-    std::lock_guard<std::mutex> lck( mtx );
+    std::lock_guard< std::mutex > lck( mtx );
 
     return timeNow_;
 }
 
 unsigned int Time::getCounter() const
 {
-    std::lock_guard<std::mutex> lck( mtx );
+    std::lock_guard< std::mutex > lck( mtx );
 
     return counter_;
 }

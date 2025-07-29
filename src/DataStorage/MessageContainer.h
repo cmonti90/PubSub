@@ -3,7 +3,7 @@
 
 namespace Intf
 {
-template<typename ...Args>
+template< typename ...Args >
 struct MessageContainer : public Args...
 {
     void initialize()
