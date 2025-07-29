@@ -59,6 +59,14 @@
         "semaphore": "cpp",
         "stop_token": "cpp",
         "cinttypes": "cpp",
-        "__mutex_base": "cpp"
+        "__mutex_base": "cpp",
+        "cstring": "cpp",
+        "bitset": "cpp",
+        "charconv": "cpp",
+        "iomanip": "cpp",
+        "span": "cpp",
+        "variant": "cpp",
+        "format": "cpp",
+        "__nullptr": "cpp"
     }
 }
