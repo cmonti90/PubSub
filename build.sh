@@ -5,9 +5,10 @@ buildToDir="build"
 curDir=${PWD}
 oldDir=${OLDPWD}
 
-SCRIPT_DIR="$( dirname -- "${BASH_SOURCE[0]}" )"
+SOURCE=${0}
 
-SOURCE=${BASH_SOURCE[0]}
+SCRIPT_DIR="$( dirname -- "${SOURCE}" )"
+
 while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   DIR=$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )
   SOURCE=$(readlink "$SOURCE")
