@@ -14,7 +14,7 @@ public:
     {
     }
 
-    PayloadEndpoint( std::shared_ptr<QueueMngr>& queue_mngr )
+    PayloadEndpoint( std::shared_ptr< QueueMngr >& queue_mngr )
         : Endpoint( queue_mngr )
     {
     }

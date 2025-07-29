@@ -14,10 +14,10 @@ public:
     typedef std::unordered_map< Message_Name, Message_Type > MessageSubscriptionList;
 
     Endpoint();
-    Endpoint( std::shared_ptr<QueueMngr>& queue_mngr );
+    Endpoint( std::shared_ptr< QueueMngr >& queue_mngr );
     ~Endpoint();
 
-    void configure( std::shared_ptr<QueueMngr>& queue_mngr );
+    void configure( std::shared_ptr< QueueMngr >& queue_mngr );
 
     void setPassiveDepth( const unsigned int depth );
     void setActiveDepth( const unsigned int depth );
@@ -34,8 +34,15 @@ public:
 
     bool hasActiveMessage() const;
 
+    void finalize();
+
 private:
+
     friend class QueueMngr;
+
+    void clearBuffers();
+    void clearActiveBuffer();
+    void clearPassiveBuffer();
 
     void writeToBuffer( Message* msg );
     void writeToBuffer( Message* msg, MessageBuffer& buffer );
