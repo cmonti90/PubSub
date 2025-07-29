@@ -1,5 +1,5 @@
-#ifndef C3D6F63C_4E40_4AAE_8296_E5302C3C9AEC
-#define C3D6F63C_4E40_4AAE_8296_E5302C3C9AEC
+#ifndef PUBSUB_PAYLOAD_H
+#define PUBSUB_PAYLOAD_H
 
 #include "Message.h"
 
@@ -139,4 +139,4 @@ struct OutputPayload :  public InheritencePayload< OutputPayloadBase< Message >,
 };
 
 
-#endif // C3D6F63C_4E40_4AAE_8296_E5302C3C9AEC
+#endif // PUBSUB_PAYLOAD_H
